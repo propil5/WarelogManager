@@ -1,0 +1,11 @@
+H:\WIP\Repos\Warelog\WarelogManager\src\Shared\obj\Debug\net5.0\Shared.GeneratedMSBuildEditorConfig.editorconfig
+H:\WIP\Repos\Warelog\WarelogManager\src\Shared\obj\Debug\net5.0\Shared.AssemblyInfoInputs.cache
+H:\WIP\Repos\Warelog\WarelogManager\src\Shared\obj\Debug\net5.0\Shared.AssemblyInfo.cs
+H:\WIP\Repos\Warelog\WarelogManager\src\Shared\obj\Debug\net5.0\Shared.csproj.CoreCompileInputs.cache
+H:\WIP\Repos\Warelog\WarelogManager\src\Shared\bin\Debug\net5.0\WarelogManager.Shared.deps.json
+H:\WIP\Repos\Warelog\WarelogManager\src\Shared\bin\Debug\net5.0\WarelogManager.Shared.dll
+H:\WIP\Repos\Warelog\WarelogManager\src\Shared\bin\Debug\net5.0\ref\WarelogManager.Shared.dll
+H:\WIP\Repos\Warelog\WarelogManager\src\Shared\bin\Debug\net5.0\WarelogManager.Shared.pdb
+H:\WIP\Repos\Warelog\WarelogManager\src\Shared\obj\Debug\net5.0\WarelogManager.Shared.dll
+H:\WIP\Repos\Warelog\WarelogManager\src\Shared\obj\Debug\net5.0\ref\WarelogManager.Shared.dll
+H:\WIP\Repos\Warelog\WarelogManager\src\Shared\obj\Debug\net5.0\WarelogManager.Shared.pdb

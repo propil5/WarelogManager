@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>WarelogManager.Model</RootNamespace>
+    <AssemblyName>WarelogManager.Model</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DataAccess\User\" />
+    <Folder Include="DataAccess\Warehouse\Interface\" />
+    <Folder Include="Services\Warehouse\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="5.0.4" />
+  </ItemGroup>
+
+</Project>
