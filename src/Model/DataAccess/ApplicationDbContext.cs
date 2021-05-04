@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using System.IO;
 using WarelogManager.Model.DataTransfer.Warehouse;
 using WarelogManager.Model.DataTransfer.Common;
+using WarelogManager.Model.DataTransfer.User;
 
 namespace WarelogManager.Model.DataAccess
 {
@@ -22,6 +23,10 @@ namespace WarelogManager.Model.DataAccess
         public virtual DbSet<ProductDto> Products { get; set; }
         public virtual DbSet<CompanyDto> Companies { get; set; }
         public virtual DbSet<PalletDto> Pallets { get; set; }
+        public virtual DbSet<AddressDto> Addresses { get; set; }
+        public virtual DbSet<PositionDto> Positions { get; set; }
+        public virtual DbSet<PlantDto> Plants { get; set; }
+        public virtual DbSet<RackDto> Racks { get; set; }
 
         internal ApplicationDbContext CreateDbContext(object p)
         {

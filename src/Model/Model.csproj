@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="DataAccess\User\" />
-    <Folder Include="DataAccess\Warehouse\Interface\" />
     <Folder Include="Services\Warehouse\" />
   </ItemGroup>
 
