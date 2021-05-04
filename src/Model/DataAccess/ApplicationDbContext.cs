@@ -6,9 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System.IO;
 using WarelogManager.Model.DataTransfer.Warehouse;
-using WarelogManager.Server.Models;
+using WarelogManager.Model.DataTransfer.Common;
 
-namespace WarelogManager.Server
+namespace WarelogManager.Model.DataAccess
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
@@ -28,21 +28,20 @@ namespace WarelogManager.Server
             throw new System.NotImplementedException();
         }
 
-        //public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
-        //{
-        //    //public ApplicationDbContext CreateDbContext(string[] args)
-        //    //{
-        //    //    return new ApplicationDbContext();
-        //    //    //IConfigurationRoot configuration = new ConfigurationBuilder()
-        //    //    //    .SetBasePath(Directory.GetCurrentDirectory())
-        //    //    //    .AddJsonFile(@Directory.GetCurrentDirectory() + "/../../WarelogManager/src/Serverappsettings.json")
-        //    //    //    .Build();
-        //    //    //var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-        //    //    //var connectionString = configuration.GetConnectionString("DatabaseConnection");
-        //    //    //builder.UseSqlServer(connectionString);
-        //    //    //return new ApplicationDbContext(builder.Options, new OperationalStoreOptionsMigrations());
-        //    //}
-        //}
+        public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+        {
+            public ApplicationDbContext CreateDbContext(string[] args)
+            {
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile(@Directory.GetCurrentDirectory() + "/../../src/Server/appsettings.json")
+                    .Build();
+                var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
+                var connectionString = configuration.GetConnectionString("DefaultConnection");
+                builder.UseSqlServer(connectionString);
+                return new ApplicationDbContext(builder.Options, new OperationalStoreOptionsMigrations());
+            }
+        }
 
         public class OperationalStoreOptionsMigrations : IOptions<OperationalStoreOptions>
         {

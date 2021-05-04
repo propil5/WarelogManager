@@ -8,7 +8,7 @@ using WarelogManager.Model.DataTransfer.Common;
 
 namespace WarelogManager.Model.DataTransfer.Warehouse
 {
-    [Table("Product")]
+    [Table("Rack")]
     public class RackDto : BaseEntity
     {
         public int LocalizationY { get; set; }

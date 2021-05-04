@@ -9,7 +9,7 @@ using WarelogManager.Model.DataTransfer.User;
 
 namespace WarelogManager.Model.DataTransfer.Warehouse
 {
-    [Table("Product")]
+    [Table("Company")]
     public class CompanyDto : BaseEntity
     {
         public string Name { get; set; }

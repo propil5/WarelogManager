@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using WarelogManager.Model.DataAccess;
 using WarelogManager.Model.DataTransfer.Common;
 
 namespace WarelogManager.Server

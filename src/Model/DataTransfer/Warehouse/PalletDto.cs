@@ -8,7 +8,7 @@ using WarelogManager.Model.DataTransfer.Common;
 
 namespace WarelogManager.Model.DataTransfer.Warehouse
 {
-    [Table("Product")]
+    [Table("Pallet")]
     public class PalletDto : BaseEntity
     {
         [ForeignKey("Owner")]

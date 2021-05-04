@@ -8,13 +8,12 @@ using WarelogManager.Model.DataTransfer.Common;
 
 namespace WarelogManager.Model.DataTransfer.User
 {
-    [Table("Product")]
+    [Table("Address")]
     public class AddressDto : BaseEntity
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
         public string Street { get; set; }
         public string PostCode { get; set; }
         public string HouseNumber { get; set; }
+        public string FlatNumber { get; set; }
     }
 }

@@ -4,11 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WarelogManager.Server.Models;
+using WarelogManager.Model.DataTransfer.Common;
 
 namespace WarelogManager.Model.DataTransfer.User
 {
-    [Table("Product")]
+    [Table("Position")]
     public class PositionDto
     {
         public ApplicationUser User {get; set;}
