@@ -9,6 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
 using WarelogManager.Model.DataAccess;
+using WarelogManager.Model.DataAccess.Warehouse;
+using WarelogManager.Model.DataAccess.Warehouse.Interface;
 using WarelogManager.Model.DataTransfer.Common;
 
 namespace WarelogManager.Server
@@ -38,8 +40,15 @@ namespace WarelogManager.Server
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
+            services.AddScoped<ICompanyDao, CompanyDao>()
+                    .AddScoped<IPalletDao, PalletDao>()
+                    .AddScoped<IPlantDao, PlantDao>()
+                    .AddScoped<IProductDao, ProductDao>();
+
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddSwaggerGen();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -61,9 +70,18 @@ namespace WarelogManager.Server
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseBlazorFrameworkFiles();
-            app.UseStaticFiles();
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
+            //app.UseHttpsRedirection();
+            //app.UseBlazorFrameworkFiles();
+            //app.UseStaticFiles();
 
             app.UseRouting();
 
@@ -73,9 +91,9 @@ namespace WarelogManager.Server
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                //endpoints.MapRazorPages();
                 endpoints.MapControllers();
-                endpoints.MapFallbackToFile("index.html");
+                //endpoints.MapFallbackToFile("index.html");
             });
         }
     }

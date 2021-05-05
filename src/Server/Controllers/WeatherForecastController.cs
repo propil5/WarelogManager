@@ -9,7 +9,7 @@ using WarelogManager.Shared;
 
 namespace WarelogManager.Server.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

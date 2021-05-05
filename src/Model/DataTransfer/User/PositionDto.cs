@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -9,7 +10,8 @@ using WarelogManager.Model.DataTransfer.Common;
 namespace WarelogManager.Model.DataTransfer.User
 {
     [Table("Position")]
-    public class PositionDto
+    [Keyless]
+    public class PositionDto : BaseEntity
     {
         public ApplicationUser User {get; set;}
         public DateTime PostitionDate {get; set;}

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace WarelogManager.Model.DataTransfer.Warehouse
         public double Width { get; set; }
         public double Depth { get; set; }
         public int PalletId { get; set; }
-        public PalletDto Pallet { get; set; }
+        [JsonIgnore]
+        public virtual PalletDto Pallet { get; set; }
     }
 }
