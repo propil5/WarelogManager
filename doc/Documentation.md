@@ -1,0 +1,1 @@
+Project for managing huge logistic centers with posibility to share e-commerce market.

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WarelogManager.Model.DataAccess.Inbound
+namespace WarelogManager.Model.DataTransfer.Estimating
 {
-    class SupplyDto
+    public class EstimateStatusDto
     {
+        public int ProductDto { get; set; }
     }
 }
