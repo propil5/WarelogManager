@@ -9,10 +9,10 @@ namespace WarelogManager.Model.DataAccess.Warehouse.Interface
 {
     public interface IProductDao
     {
-        bool Add(ProductDto product);
+        int Add(ProductDto product);
         bool Delete(int id);
-        IEnumerable<ProductDto> Get();
-        IEnumerable<ProductDto> GetById(int id);
+        Task<IEnumerable<ProductDto>> Get();
+        ProductDto GetById(int id);
         bool Update(ProductDto product);
     }
 }

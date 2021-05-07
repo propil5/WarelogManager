@@ -10,7 +10,7 @@ namespace WarelogManager.Client.Controllers
 {
     //[Authorize]
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
         private readonly IProductDao _productDao;
@@ -21,16 +21,42 @@ namespace WarelogManager.Client.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ProductDto> Get()
+        public async Task<IEnumerable<ProductDto>> Get()
         {
-            return _productDao.Get();
+            var products = await _productDao.Get();
+            return products;
+        }
+
+        [HttpGet("{id:int}")]
+        public ProductDto GetById(int id)
+        {
+            return _productDao.GetById(id);
         }
 
         [HttpPost]
-        public bool Add(ProductDto productDto)
+        public ActionResult<int> Add(ProductDto productDto)
         {
-            _productDao.Add(productDto);
-            return true;
+            var id = _productDao.Add(productDto);
+            if(id > 0)
+            {
+                return Ok(id);
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut]
+        public bool Update(ProductDto productDto)
+        {
+            return _productDao.Update(productDto);
+        }
+
+        [HttpDelete("{id}")]
+        public bool Delete(int id)
+        {
+            return _productDao.Delete(id);
         }
     }
 }

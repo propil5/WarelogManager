@@ -1,0 +1,115 @@
+﻿@page "/products/add"
+@page "/products/edit/{Id:int}"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using WarelogManager.Shared.Warehouse
+@inject NavigationManager NavManager
+@inject HttpClient Http
+@inject IToastService toastService;
+
+<h3>Add new product</h3>
+
+<p>
+    <label>
+        Name:
+        <input @bind="product.Name" />
+    </label>
+</p>
+
+<p>
+        <label>
+        Description:
+        <input @bind="product.Description" />
+    </label>
+</p>
+
+<p>
+        <label>
+        Weight:
+        <input @bind="product.Weight" />
+    </label>
+</p>
+
+<p>
+        <label>
+        Width:
+        <input @bind="product.Width" />
+    </label>
+</p>
+
+<p>
+        <label>
+        Height:
+        <input @bind="product.Height" />
+    </label>
+</p>
+
+<p>
+        <label>
+        PalletId:
+        <input @bind="product.PalletId" />
+    </label>
+</p>
+@if (IsUpdate)
+{
+    <button type="button" class="btn btn-warning" disabled=@IsTaskRunning @onclick="UpdateProductAsync">Update</button>
+}
+else
+{
+    <button type="button" class="btn btn-success" disabled=@IsTaskRunning @onclick="AddProductAsync">Add</button>
+}
+
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+    public bool IsUpdate{ get; set; }
+    private Product product { get; set; }
+    bool IsTaskRunning = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsTaskRunning = true;
+        product = new Product();
+        IsUpdate = false;
+
+        if (Id != null)
+        {
+            product = await Http.GetFromJsonAsync<Product>($"/api/product/{Id}");
+            IsUpdate = true;
+        }
+        IsTaskRunning = false;
+    }
+
+    private async Task AddProductAsync()
+    {
+        IsTaskRunning = true;
+        var result = await Http.PostAsJsonAsync("api/product", product);
+        if (result.IsSuccessStatusCode)
+        {
+            var id = await result.Content.ReadFromJsonAsync<int>();
+            toastService.ShowSuccess($"Succesfully added product with id: {id}");
+        }
+        else
+        {
+            toastService.ShowError($"Could not add product.");
+        }
+        IsTaskRunning = false;
+    }
+
+    private async Task UpdateProductAsync()
+    {
+        IsTaskRunning = true;
+        var result = await Http.PutAsJsonAsync("api/product", product);
+        if (result.IsSuccessStatusCode)
+        {
+            toastService.ShowSuccess($"Succesfully updated product with id: {product.Id}");
+            //NavManager.NavigateTo($"/products/");
+        }
+        else
+        {
+            toastService.ShowError($"Could not add product.");
+        }
+        IsTaskRunning = false;
+    }
+}

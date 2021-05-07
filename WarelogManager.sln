@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "src\Client\Client
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "src\Shared\Shared.csproj", "{512739F0-97D4-4EF6-A3A9-44D6412825F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model.Test", "src\Model.Test\Model.Test.csproj", "{4CBB82C1-4EF8-4D26-A00E-A04FCA9ABC70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model.Test", "src\Model.Test\Model.Test.csproj", "{4CBB82C1-4EF8-4D26-A00E-A04FCA9ABC70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "src\Model\Model.csproj", "{532E7A4B-9E66-4521-A310-C1B727E03293}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "src\Model\Model.csproj", "{532E7A4B-9E66-4521-A310-C1B727E03293}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,0 +1,97 @@
+﻿@page "/products"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using WarelogManager.Shared.Warehouse
+@attribute [Authorize]
+@inject NavigationManager NavManager
+@inject HttpClient Http
+@inject IToastService toastService;
+
+<h1>Products</h1>
+
+<p>Products stored in the database: </p>
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div>
+    <button type="button" class="btn btn-success" @onclick="() => RedirectToProductEdit()">Add</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Weight</th>
+                <th>Width</th>
+                <th>Height</th>
+                <th>PalletId</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                    <td>@product.Weight</td>
+                    <td>@product.Width</td>
+                    <td>@product.Height</td>
+                    <td>@product.PalletId</td>
+                    <td>
+                        <button type="button" class="btn btn-warning" disabled=@IsTaskRunning 
+                                @onclick="() => RedirectToProductEdit(product.Id)">Edit</button>
+
+                        <button type="button" class="btn btn-danger" disabled=@IsTaskRunning
+                                @onclick="() => RemoveProductAsync(product.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+}
+
+@code {
+    private Product[] products;
+    bool IsTaskRunning = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetProductsAsync();        
+    }
+
+    private async Task GetProductsAsync()
+    {
+        products = await Http.GetFromJsonAsync<Product[]>("api/product/");
+    }
+
+    private void RedirectToProductEdit(int? id = null)
+    {
+        if(id == null)
+        {
+            NavManager.NavigateTo($"/products/add");
+        }
+        else
+        {
+            NavManager.NavigateTo($"/products/edit/{id}");    
+        }
+    }
+    
+    private async Task RemoveProductAsync(int id)
+    {
+        IsTaskRunning = true;
+        var result = await Http.DeleteAsync($"api/product/{id}");
+        if (result.IsSuccessStatusCode)
+        {
+            toastService.ShowWarning($"Succesfully removed product with id: {id}.");
+            await GetProductsAsync();
+        }
+        IsTaskRunning = false;
+    }
+}

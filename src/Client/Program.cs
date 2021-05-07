@@ -1,3 +1,4 @@
+using Blazored.Toast;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +26,7 @@ namespace WarelogManager.Client
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("WarelogManager.ServerAPI"));
 
             builder.Services.AddApiAuthorization();
+            builder.Services.AddBlazoredToast();
 
             await builder.Build().RunAsync();
         }

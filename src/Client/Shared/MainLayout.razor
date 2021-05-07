@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@using Blazored.Toast.Configuration
+
 
 <div class="page">
     <div class="sidebar">
@@ -16,3 +18,13 @@
         </div>
     </div>
 </div>
+
+<BlazoredToasts Position="ToastPosition.TopCenter"
+                Timeout="15"
+                IconType="IconType.FontAwesome"
+                SuccessClass="success-toast-override"
+                SuccessIcon="thumbs-up"
+                ErrorClass="warning-toast-override"
+                ErrorIcon="thumbs-down">
+    
+</BlazoredToasts>
