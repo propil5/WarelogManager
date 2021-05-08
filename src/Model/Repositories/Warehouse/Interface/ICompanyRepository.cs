@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using WarelogManager.Model.DataTransfer.Warehouse;
 
-namespace WarelogManager.Model.DataAccess.Warehouse.Interface
+namespace WarelogManager.Model.Repositories.Warehouse.Interface
 {
-    public interface ICompanyDao
+    public interface ICompanyRepository
     {
         bool Add(CompanyDto Company);
         bool Delete(int id);

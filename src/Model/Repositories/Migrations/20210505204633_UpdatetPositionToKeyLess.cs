@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace WarelogManager.Model.DataAccess.Migrations
+namespace WarelogManager.Model.Repositories.Migrations
 {
     public partial class UpdatetPositionToKeyLess : Migration
     {

@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WarelogManager.Model.DataAccess;
+using WarelogManager.Model.Repositories;
 
-namespace WarelogManager.Model.DataAccess.Migrations
+namespace WarelogManager.Model.Repositories.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210504204334_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210505204633_UpdatetPositionToKeyLess")]
+    partial class UpdatetPositionToKeyLess
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -344,6 +344,28 @@ namespace WarelogManager.Model.DataAccess.Migrations
                     b.ToTable("Address");
                 });
 
+            modelBuilder.Entity("WarelogManager.Model.DataTransfer.User.PositionDto", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("PostitionDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Position");
+                });
+
             modelBuilder.Entity("WarelogManager.Model.DataTransfer.Warehouse.CompanyDto", b =>
                 {
                     b.Property<int>("Id")
@@ -385,6 +407,26 @@ namespace WarelogManager.Model.DataAccess.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("Pallet");
+                });
+
+            modelBuilder.Entity("WarelogManager.Model.DataTransfer.Warehouse.PlantDto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.ToTable("Plant");
                 });
 
             modelBuilder.Entity("WarelogManager.Model.DataTransfer.Warehouse.ProductDto", b =>
@@ -429,6 +471,51 @@ namespace WarelogManager.Model.DataAccess.Migrations
                     b.HasIndex("PalletId");
 
                     b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("WarelogManager.Model.DataTransfer.Warehouse.RackDto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ColumnNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ColumnWidth")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DepthNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Height")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Localization")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("LocalizationX")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LocalizationY")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("PalletRack")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("RowHeight")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ShelfNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Width")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rack");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -482,6 +569,15 @@ namespace WarelogManager.Model.DataAccess.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WarelogManager.Model.DataTransfer.User.PositionDto", b =>
+                {
+                    b.HasOne("WarelogManager.Model.DataTransfer.Common.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("WarelogManager.Model.DataTransfer.Warehouse.CompanyDto", b =>
                 {
                     b.HasOne("WarelogManager.Model.DataTransfer.User.AddressDto", "Address")
@@ -498,6 +594,15 @@ namespace WarelogManager.Model.DataAccess.Migrations
                         .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("WarelogManager.Model.DataTransfer.Warehouse.PlantDto", b =>
+                {
+                    b.HasOne("WarelogManager.Model.DataTransfer.User.AddressDto", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("WarelogManager.Model.DataTransfer.Warehouse.ProductDto", b =>

@@ -3,22 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using WarelogManager.Model.DataTransfer.Warehouse;
 using System.ComponentModel.DataAnnotations.Schema;
-using WarelogManager.Model.DataAccess.Warehouse.Interface;
+using WarelogManager.Model.Repositories.Warehouse.Interface;
 using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace WarelogManager.Model.DataAccess.Warehouse
+namespace WarelogManager.Model.Repositories.Warehouse
 {
-    public class ProductDao : IProductDao
+    public class ProductRepository : BaseRepository, IProductRepository
     {
-        private readonly ApplicationDbContext _context;
-
-        public ProductDao(ApplicationDbContext context)
+        public ProductRepository(ApplicationDbContext context) : base(context)
         {
-            _context = context;
         }
+
         public int Add(ProductDto product)
         {
             _context.Products.Add(product);

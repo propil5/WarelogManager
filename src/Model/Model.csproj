@@ -7,13 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DataAccess\Accounting\" />
-    <Folder Include="DataAccess\Inbound\" />
-    <Folder Include="DataAccess\Managing\" />
-    <Folder Include="DataAccess\Processing\" />
-    <Folder Include="DataAccess\Outbound\" />
-    <Folder Include="DataAccess\User\" />
-    <Folder Include="DataTransfer\Payment\" />
+    <Folder Include="Repositories\Accounting\" />
+    <Folder Include="Repositories\Managing\" />
+    <Folder Include="Repositories\Inbound\" />
+    <Folder Include="Repositories\Processing\" />
+    <Folder Include="Repositories\Outbound\" />
+    <Folder Include="Repositories\User\" />
     <Folder Include="Services\Warehouse\" />
   </ItemGroup>
 

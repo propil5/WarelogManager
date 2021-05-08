@@ -9,7 +9,7 @@ using WarelogManager.Model.DataTransfer.Warehouse;
 using WarelogManager.Model.DataTransfer.Common;
 using WarelogManager.Model.DataTransfer.User;
 
-namespace WarelogManager.Model.DataAccess
+namespace WarelogManager.Model.Repositories
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
@@ -50,7 +50,7 @@ namespace WarelogManager.Model.DataAccess
 
         public class OperationalStoreOptionsMigrations : IOptions<OperationalStoreOptions>
         {
-            public OperationalStoreOptions Value => new OperationalStoreOptions()
+            public OperationalStoreOptions Value => new()
             {
                 DeviceFlowCodes = new TableConfiguration("DeviceCodes"),
                 EnableTokenCleanup = false,

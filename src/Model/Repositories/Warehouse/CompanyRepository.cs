@@ -3,48 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WarelogManager.Model.Repositories.Warehouse.Interface;
 using WarelogManager.Model.DataTransfer.Warehouse;
 
-namespace WarelogManager.Model.DataAccess.Warehouse
+namespace WarelogManager.Model.Repositories.Warehouse
 {
-    public class PlantDao : IPlantDao
+    public class CompanyRepository : BaseRepository, ICompanyRepository
     {
-        private readonly ApplicationDbContext _context;
-
-        public PlantDao(ApplicationDbContext context)
+        public CompanyRepository(ApplicationDbContext context) : base(context)
         {
-            _context = context;
         }
-        public bool Add(PlantDto pallet)
+
+        public bool Add(CompanyDto Company)
         {
-            _context.Plants.Add(pallet);
+            _context.Companies.Add(Company);
             var saveResult = _context.SaveChanges();
             return saveResult == 1;
         }
 
-        public IEnumerable<PlantDto> Get()
+        public IEnumerable<CompanyDto> Get()
         {
-            return _context.Plants;
+            return _context.Companies;
         }
 
-        public IEnumerable<PlantDto> GetById(int id)
+        public IEnumerable<CompanyDto> GetById(int id)
         {
-            return _context.Plants.Where(x => x.Id == id);
+            return _context.Companies.Where(x => x.Id == id);
         }
 
-        public bool Update(PlantDto Pallet)
+        public bool Update(CompanyDto Company)
         {
-            var exisitngPallet = _context.Plants
-                .Where(x => x.Id == Pallet.Id)
+            var exisitngCompany = _context.Companies
+                .Where(x => x.Id == Company.Id)
                 .SingleOrDefault();
 
 
-            if (exisitngPallet == null)
+            if (exisitngCompany == null)
             {
                 return false;
             }
 
-            _context.Update(exisitngPallet);
+            //TODO: add this update logic
+
+            _context.Update(exisitngCompany);
             var saveResult = _context.SaveChanges();
             return saveResult == 1;
         }
@@ -52,13 +53,13 @@ namespace WarelogManager.Model.DataAccess.Warehouse
         public bool Delete(int id)
         {
             var deleted = false;
-            var Pallet = _context.Companies
+            var Company = _context.Companies
                 .Where(x => x.Id == id)
                 .SingleOrDefault();
 
-            if (Pallet != null)
+            if (Company != null)
             {
-                _context.Remove(Pallet);
+                _context.Remove(Company);
                 deleted = true;
             }
             else

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
-using WarelogManager.Model.DataAccess;
+using WarelogManager.Model.Repositories;
 
-namespace WarelogManager.Model.DataAccess.Migrations
+namespace WarelogManager.Model.Repositories.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("00000000000000_CreateIdentitySchema")]

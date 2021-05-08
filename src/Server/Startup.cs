@@ -8,9 +8,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
-using WarelogManager.Model.DataAccess;
-using WarelogManager.Model.DataAccess.Warehouse;
-using WarelogManager.Model.DataAccess.Warehouse.Interface;
+using WarelogManager.Model.Repositories;
+using WarelogManager.Model.Repositories.Warehouse;
+using WarelogManager.Model.Repositories.Warehouse.Interface;
 using WarelogManager.Model.DataTransfer.Common;
 
 namespace WarelogManager.Server
@@ -40,10 +40,10 @@ namespace WarelogManager.Server
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            services.AddScoped<ICompanyDao, CompanyDao>()
-                    .AddScoped<IPalletDao, PalletDao>()
-                    .AddScoped<IPlantDao, PlantDao>()
-                    .AddScoped<IProductDao, ProductDao>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>()
+                    .AddScoped<IPalletRepository, PalletRepository>()
+                    .AddScoped<IPlantRepository, PlantRepository>()
+                    .AddScoped<IProductRepository, ProductRepository>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

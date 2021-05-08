@@ -5,36 +5,34 @@ using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Warehouse;
 
-namespace WarelogManager.Model.DataAccess.Warehouse
+namespace WarelogManager.Model.Repositories.Warehouse
 {
-    public class PalletDao : IPalletDao
+    public class PlantRepository : BaseRepository, IPlantRepository
     {
-        private readonly ApplicationDbContext _context;
-
-        public PalletDao(ApplicationDbContext context)
+        public PlantRepository(ApplicationDbContext context) : base(context)
         {
-            _context = context;
         }
-        public bool Add(PalletDto pallet)
+
+        public bool Add(PlantDto pallet)
         {
-            _context.Pallets.Add(pallet);
+            _context.Plants.Add(pallet);
             var saveResult = _context.SaveChanges();
             return saveResult == 1;
         }
 
-        public IEnumerable<PalletDto> Get()
+        public IEnumerable<PlantDto> Get()
         {
-            return _context.Pallets;
+            return _context.Plants;
         }
 
-        public IEnumerable<PalletDto> GetById(int id)
+        public IEnumerable<PlantDto> GetById(int id)
         {
-            return _context.Pallets.Where(x => x.Id == id);
+            return _context.Plants.Where(x => x.Id == id);
         }
 
-        public bool Update(PalletDto Pallet)
+        public bool Update(PlantDto Pallet)
         {
-            var exisitngPallet = _context.Pallets
+            var exisitngPallet = _context.Plants
                 .Where(x => x.Id == Pallet.Id)
                 .SingleOrDefault();
 

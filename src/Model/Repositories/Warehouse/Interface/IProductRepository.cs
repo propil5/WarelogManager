@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Warehouse;
 
-namespace WarelogManager.Model.DataAccess.Warehouse.Interface
+namespace WarelogManager.Model.Repositories.Warehouse.Interface
 {
-    public interface IProductDao
+    public interface IProductRepository
     {
         int Add(ProductDto product);
         bool Delete(int id);

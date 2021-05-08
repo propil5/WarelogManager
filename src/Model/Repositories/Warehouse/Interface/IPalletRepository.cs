@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using WarelogManager.Model.DataTransfer.Warehouse;
 
-namespace WarelogManager.Model.DataAccess.Warehouse
+namespace WarelogManager.Model.Repositories.Warehouse
 {
-    public interface IPalletDao
+    public interface IPalletRepository
     {
         bool Add(PalletDto pallet);
         bool Delete(int id);
