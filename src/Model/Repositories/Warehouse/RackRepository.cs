@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Model.Repositories.Warehouse.Interface;
 using WarelogManager.Model.DataTransfer.Warehouse;
+using WarelogManager.Model.Mapping;
 
 namespace WarelogManager.Model.Repositories.Warehouse
 {

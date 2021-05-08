@@ -12,6 +12,7 @@ using WarelogManager.Model.Repositories;
 using WarelogManager.Model.Repositories.Warehouse;
 using WarelogManager.Model.Repositories.Warehouse.Interface;
 using WarelogManager.Model.DataTransfer.Common;
+using WarelogManager.Model.Mapping;
 
 namespace WarelogManager.Server
 {

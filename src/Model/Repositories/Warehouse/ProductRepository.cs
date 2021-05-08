@@ -8,6 +8,7 @@ using IdentityServer4.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using WarelogManager.Model.Mapping;
 
 namespace WarelogManager.Model.Repositories.Warehouse
 {
@@ -17,10 +18,10 @@ namespace WarelogManager.Model.Repositories.Warehouse
         {
         }
 
-        public int Add(ProductDto product)
+        public async Task<int> Add(ProductDto product)
         {
-            _context.Products.Add(product);
-            _context.SaveChanges();
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
             return product.Id;
         }
 
@@ -29,18 +30,15 @@ namespace WarelogManager.Model.Repositories.Warehouse
             return await _context.Products.ToListAsync();
         }
 
-        public ProductDto GetById(int id)
+        public async Task<ProductDto> GetById(int id)
         {
-            var product = _context.Products.FirstOrDefault(x => x.Id == id);
-            return product;
+            return await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public bool Update(ProductDto product)
+        public async Task<bool> Update(ProductDto product)
         {
-            var exisitngProduct = _context.Products
-                .Where(x => x.Id == product.Id)
-                .SingleOrDefault();
-
+            var exisitngProduct = await _context.Products
+                .SingleOrDefaultAsync(x => x.Id == product.Id);
 
             if (exisitngProduct == null)
             {
@@ -61,16 +59,15 @@ namespace WarelogManager.Model.Repositories.Warehouse
             exisitngProduct.Width = product.Width;
 
             _context.Update(exisitngProduct);
-            var saveResult = _context.SaveChanges();
+            var saveResult = await _context.SaveChangesAsync();
             return saveResult == 1;
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             var deleted = false;
             var product = _context.Products
-                .Where(x => x.Id == id)
-                .SingleOrDefault();
+                .SingleOrDefaultAsync(x => x.Id == id);
 
             if (product != null)
             {
@@ -82,7 +79,7 @@ namespace WarelogManager.Model.Repositories.Warehouse
                 deleted = false;
             }
 
-            var saveResult = _context.SaveChanges();
+            var saveResult = await _context.SaveChangesAsync();
             return saveResult == 1 && deleted == true;
         }
     }

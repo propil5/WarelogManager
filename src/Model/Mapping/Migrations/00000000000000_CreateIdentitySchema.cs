@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace WarelogManager.Model.Repositories.Migrations
+namespace WarelogManager.Model.Mapping.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

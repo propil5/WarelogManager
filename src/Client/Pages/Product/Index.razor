@@ -1,7 +1,7 @@
 ﻿@page "/products"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@using WarelogManager.Shared.Warehouse
+@using WarelogManager.Shared.Resources.Warehouse.Product
 @attribute [Authorize]
 @inject NavigationManager NavManager
 @inject HttpClient Http
@@ -58,7 +58,7 @@ else
 }
 
 @code {
-    private Product[] products;
+    private ProductResource[] products;
     bool IsTaskRunning = false;
 
     protected override async Task OnInitializedAsync()
@@ -68,7 +68,7 @@ else
 
     private async Task GetProductsAsync()
     {
-        products = await Http.GetFromJsonAsync<Product[]>("api/product/");
+        products = await Http.GetFromJsonAsync<ProductResource[]>("api/product/");
     }
 
     private void RedirectToProductEdit(int? id = null)

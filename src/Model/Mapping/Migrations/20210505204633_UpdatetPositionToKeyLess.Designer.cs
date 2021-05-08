@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using WarelogManager.Model.Repositories;
+using WarelogManager.Model.Mapping;
 
-namespace WarelogManager.Model.Repositories.Migrations
+namespace WarelogManager.Model.Mapping.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20210505204633_UpdatetPositionToKeyLess")]

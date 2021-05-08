@@ -2,7 +2,7 @@
 @page "/products/edit/{Id:int}"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@using WarelogManager.Shared.Warehouse
+@using WarelogManager.Shared.Resources.Warehouse.Product
 @inject NavigationManager NavManager
 @inject HttpClient Http
 @inject IToastService toastService;
@@ -64,18 +64,18 @@ else
     [Parameter]
     public int? Id { get; set; }
     public bool IsUpdate{ get; set; }
-    private Product product { get; set; }
+    private ProductResource product { get; set; }
     bool IsTaskRunning = false;
 
     protected override async Task OnInitializedAsync()
     {
         IsTaskRunning = true;
-        product = new Product();
+        product = new ProductResource();
         IsUpdate = false;
 
         if (Id != null)
         {
-            product = await Http.GetFromJsonAsync<Product>($"/api/product/{Id}");
+            product = await Http.GetFromJsonAsync<ProductResource>($"/api/product/{Id}");
             IsUpdate = true;
         }
         IsTaskRunning = false;

@@ -9,7 +9,7 @@ using WarelogManager.Model.DataTransfer.Warehouse;
 using WarelogManager.Model.DataTransfer.Common;
 using WarelogManager.Model.DataTransfer.User;
 
-namespace WarelogManager.Model.Repositories
+namespace WarelogManager.Model.Mapping
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
