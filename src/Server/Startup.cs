@@ -13,6 +13,9 @@ using WarelogManager.Model.Repositories.Warehouse;
 using WarelogManager.Model.Repositories.Warehouse.Interface;
 using WarelogManager.Model.DataTransfer.Common;
 using WarelogManager.Model.Mapping;
+using WarelogManager.Model.Services.Warehouse.Interface;
+using WarelogManager.Model.Services.Warehouse;
+using WarelogManager.Model.Repositories.UnitOfWork;
 
 namespace WarelogManager.Server
 {
@@ -41,10 +44,18 @@ namespace WarelogManager.Server
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            //Repositories
             services.AddScoped<ICompanyRepository, CompanyRepository>()
                     .AddScoped<IPalletRepository, PalletRepository>()
                     .AddScoped<IPlantRepository, PlantRepository>()
                     .AddScoped<IProductRepository, ProductRepository>();
+
+
+            //Services
+            services.AddScoped<ICompanyService, CompanyService>()
+                    .AddScoped<IProductService, ProductService>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

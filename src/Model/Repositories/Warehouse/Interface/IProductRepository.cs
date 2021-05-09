@@ -9,10 +9,10 @@ namespace WarelogManager.Model.Repositories.Warehouse.Interface
 {
     public interface IProductRepository
     {
-        Task<int> Add(ProductDto product);
-        Task<bool> Delete(int id);
+        Task<int?> Add(ProductDto product);
         Task<IEnumerable<ProductDto>> Get();
         Task<ProductDto> GetById(int id);
-        Task<bool> Update(ProductDto product);
+        void Update(ProductDto product);
+        void Delete(ProductDto product);
     }
 }

@@ -13,6 +13,8 @@ namespace WarelogManager.Model.DataTransfer.Warehouse
     public class PlantDto : BaseEntity
     {
         public string Name { get; set; }
+        [ForeignKey("Address")]
+        public int AddressId { get; set; }
         public AddressDto Address { get; set; }
     }
 }

@@ -1,14 +1,15 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Warehouse;
 
-namespace WarelogManager.Model.Repositories.Warehouse
+namespace WarelogManager.Model.Repositories.Warehouse.Interface
 {
     public interface IPalletRepository
     {
-        bool Add(PalletDto pallet);
-        bool Delete(int id);
-        IEnumerable<PalletDto> Get();
-        IEnumerable<PalletDto> GetById(int id);
-        bool Update(PalletDto Pallet);
+        Task<int?> Add(PalletDto pallet);
+        Task<IEnumerable<PalletDto>> Get();
+        Task<PalletDto> GetById(int id);
+        void Update(PalletDto pallet);
+        void Delete(PalletDto pallet);
     }
 }

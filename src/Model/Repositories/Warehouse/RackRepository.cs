@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using WarelogManager.Model.Repositories.Warehouse.Interface;
 using WarelogManager.Model.DataTransfer.Warehouse;
 using WarelogManager.Model.Mapping;
+using Microsoft.EntityFrameworkCore;
 
 namespace WarelogManager.Model.Repositories.Warehouse
 {
@@ -15,59 +16,30 @@ namespace WarelogManager.Model.Repositories.Warehouse
         {
         }
 
-        public bool Add(RackDto pallet)
+        public async Task<int?> Add(RackDto rack)
         {
-            _context.Racks.Add(pallet);
-            var saveResult = _context.SaveChanges();
-            return saveResult == 1;
+            await _context.Racks.AddAsync(rack);
+            return rack.Id;
         }
 
-        public IEnumerable<RackDto> Get()
+        public async Task<IEnumerable<RackDto>> Get()
         {
-            return _context.Racks;
+            return await _context.Racks.ToListAsync();
         }
 
-        public IEnumerable<RackDto> GetById(int id)
+        public async Task<RackDto> GetById(int id)
         {
-            return _context.Racks.Where(x => x.Id == id);
+            return await _context.Racks.FindAsync(id);
         }
 
-        public bool Update(RackDto Pallet)
+        public void Update(RackDto rack)
         {
-            var exisitngPallet = _context.Racks
-                .Where(x => x.Id == Pallet.Id)
-                .SingleOrDefault();
-
-
-            if (exisitngPallet == null)
-            {
-                return false;
-            }
-
-            _context.Update(exisitngPallet);
-            var saveResult = _context.SaveChanges();
-            return saveResult == 1;
+            _context.Racks.Update(rack);
         }
 
-        public bool Delete(int id)
+        public void Delete(RackDto rack)
         {
-            var deleted = false;
-            var Pallet = _context.Companies
-                .Where(x => x.Id == id)
-                .SingleOrDefault();
-
-            if (Pallet != null)
-            {
-                _context.Remove(Pallet);
-                deleted = true;
-            }
-            else
-            {
-                deleted = false;
-            }
-
-            var saveResult = _context.SaveChanges();
-            return saveResult == 1 && deleted == true;
+            _context.Racks.Remove(rack);
         }
     }
 }

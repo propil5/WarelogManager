@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Warehouse;
 using WarelogManager.Model.Mapping;
+using WarelogManager.Model.Repositories.Warehouse.Interface;
 
 namespace WarelogManager.Model.Repositories.Warehouse
 {
@@ -14,59 +16,30 @@ namespace WarelogManager.Model.Repositories.Warehouse
         {
         }
 
-        public bool Add(PlantDto pallet)
+        public async Task<int?> Add(PlantDto plant)
         {
-            _context.Plants.Add(pallet);
-            var saveResult = _context.SaveChanges();
-            return saveResult == 1;
+            await _context.Plants.AddAsync(plant);
+            return plant.Id;
         }
 
-        public IEnumerable<PlantDto> Get()
+        public async Task<IEnumerable<PlantDto>> Get()
         {
-            return _context.Plants;
+            return await _context.Plants.ToListAsync();
         }
 
-        public IEnumerable<PlantDto> GetById(int id)
+        public async Task<PlantDto> GetById(int id)
         {
-            return _context.Plants.Where(x => x.Id == id);
+            return await _context.Plants.FindAsync(id);
         }
 
-        public bool Update(PlantDto Pallet)
+        public void Update(PlantDto pallet)
         {
-            var exisitngPallet = _context.Plants
-                .Where(x => x.Id == Pallet.Id)
-                .SingleOrDefault();
-
-
-            if (exisitngPallet == null)
-            {
-                return false;
-            }
-
-            _context.Update(exisitngPallet);
-            var saveResult = _context.SaveChanges();
-            return saveResult == 1;
+            _context.Plants.Update(pallet);
         }
 
-        public bool Delete(int id)
+        public void Delete(PlantDto plant)
         {
-            var deleted = false;
-            var Pallet = _context.Companies
-                .Where(x => x.Id == id)
-                .SingleOrDefault();
-
-            if (Pallet != null)
-            {
-                _context.Remove(Pallet);
-                deleted = true;
-            }
-            else
-            {
-                deleted = false;
-            }
-
-            var saveResult = _context.SaveChanges();
-            return saveResult == 1 && deleted == true;
+            _context.Remove(plant);
         }
     }
 }

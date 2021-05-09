@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WarelogManager.Shared.Resources.Warehouse.Product
 {
-    public class SaveProductResource
+    public class BaseProductResource
     {
         [Required]
         [MaxLength(30)]

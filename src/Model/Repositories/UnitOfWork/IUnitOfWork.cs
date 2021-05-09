@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WarelogManager.Client.Warehouse
+namespace WarelogManager.Model.Repositories.UnitOfWork
 {
-    class Rack
+    public interface IUnitOfWork
     {
+        Task CompleteAsync(); 
     }
 }

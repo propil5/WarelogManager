@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace WarelogManager.Client.Warehouse
 {
-    class Plant
+    public class BasePlantResource
     {
+        public string Name { get; set; }
+        public int AddressId { get; set; }
     }
 }

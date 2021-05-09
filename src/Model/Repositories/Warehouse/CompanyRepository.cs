@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using WarelogManager.Model.Repositories.Warehouse.Interface;
 using WarelogManager.Model.DataTransfer.Warehouse;
 using WarelogManager.Model.Mapping;
+using Microsoft.EntityFrameworkCore;
+using WarelogManager.Model.Repositories.Warehouse.Interface;
 
 namespace WarelogManager.Model.Repositories.Warehouse
 {
@@ -15,61 +15,30 @@ namespace WarelogManager.Model.Repositories.Warehouse
         {
         }
 
-        public bool Add(CompanyDto Company)
+        public async Task<int?> Add(CompanyDto Company)
         {
-            _context.Companies.Add(Company);
-            var saveResult = _context.SaveChanges();
-            return saveResult == 1;
+            await _context.Companies.AddAsync(Company);
+            return Company.Id;
         }
 
-        public IEnumerable<CompanyDto> Get()
+        public async Task<IEnumerable<CompanyDto>> Get()
         {
-            return _context.Companies;
+            return await _context.Companies.ToListAsync();
         }
 
-        public IEnumerable<CompanyDto> GetById(int id)
+        public async Task<CompanyDto> GetById(int id)
         {
-            return _context.Companies.Where(x => x.Id == id);
+            return await _context.Companies.FindAsync(id);
         }
 
-        public bool Update(CompanyDto Company)
+        public void Update(CompanyDto company)
         {
-            var exisitngCompany = _context.Companies
-                .Where(x => x.Id == Company.Id)
-                .SingleOrDefault();
-
-
-            if (exisitngCompany == null)
-            {
-                return false;
-            }
-
-            //TODO: add this update logic
-
-            _context.Update(exisitngCompany);
-            var saveResult = _context.SaveChanges();
-            return saveResult == 1;
+            _context.Companies.Update(company);
         }
 
-        public bool Delete(int id)
+        public void Delete(CompanyDto company)
         {
-            var deleted = false;
-            var Company = _context.Companies
-                .Where(x => x.Id == id)
-                .SingleOrDefault();
-
-            if (Company != null)
-            {
-                _context.Remove(Company);
-                deleted = true;
-            }
-            else
-            {
-                deleted = false;
-            }
-
-            var saveResult = _context.SaveChanges();
-            return saveResult == 1 && deleted == true;
+            _context.Companies.Remove(company);
         }
     }
 }

@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Warehouse;
 using WarelogManager.Model.Mapping;
+using WarelogManager.Model.Repositories.Warehouse.Interface;
 
 namespace WarelogManager.Model.Repositories.Warehouse
 {
@@ -14,59 +16,30 @@ namespace WarelogManager.Model.Repositories.Warehouse
         {
         }
 
-        public bool Add(PalletDto pallet)
+        public async Task<int?> Add(PalletDto pallet)
         {
-            _context.Pallets.Add(pallet);
-            var saveResult = _context.SaveChanges();
-            return saveResult == 1;
+            await _context.Pallets.AddAsync(pallet);
+            return pallet.Id;
         }
 
-        public IEnumerable<PalletDto> Get()
+        public async Task<IEnumerable<PalletDto>> Get()
         {
-            return _context.Pallets;
+            return await _context.Pallets.ToListAsync();
         }
 
-        public IEnumerable<PalletDto> GetById(int id)
+        public async Task<PalletDto> GetById(int id)
         {
-            return _context.Pallets.Where(x => x.Id == id);
+            return await _context.Pallets.FindAsync(id);
         }
 
-        public bool Update(PalletDto Pallet)
+        public void Update(PalletDto pallet)
         {
-            var exisitngPallet = _context.Pallets
-                .Where(x => x.Id == Pallet.Id)
-                .SingleOrDefault();
-
-
-            if (exisitngPallet == null)
-            {
-                return false;
-            }
-
-            _context.Update(exisitngPallet);
-            var saveResult = _context.SaveChanges();
-            return saveResult == 1;
+            _context.Pallets.Update(pallet);
         }
 
-        public bool Delete(int id)
+        public void Delete(PalletDto pallet)
         {
-            var deleted = false;
-            var Pallet = _context.Companies
-                .Where(x => x.Id == id)
-                .SingleOrDefault();
-
-            if (Pallet != null)
-            {
-                _context.Remove(Pallet);
-                deleted = true;
-            }
-            else
-            {
-                deleted = false;
-            }
-
-            var saveResult = _context.SaveChanges();
-            return saveResult == 1 && deleted == true;
+            _context.Pallets.Remove(pallet);
         }
     }
 }

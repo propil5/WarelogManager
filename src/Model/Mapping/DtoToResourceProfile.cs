@@ -13,7 +13,7 @@ namespace WarelogManager.Model.Mapping
     {
         public ModelToResourceProfile()
         {
-            CreateMap<SaveProductResource, ProductDto>();
+            CreateMap<BaseProductResource, ProductDto>();
             CreateMap<ProductResource, ProductDto>();
         }
     }

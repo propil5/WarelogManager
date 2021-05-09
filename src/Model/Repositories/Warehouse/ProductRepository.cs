@@ -18,10 +18,9 @@ namespace WarelogManager.Model.Repositories.Warehouse
         {
         }
 
-        public async Task<int> Add(ProductDto product)
+        public async Task<int?> Add(ProductDto product)
         {
             await _context.Products.AddAsync(product);
-            await _context.SaveChangesAsync();
             return product.Id;
         }
 
@@ -32,55 +31,17 @@ namespace WarelogManager.Model.Repositories.Warehouse
 
         public async Task<ProductDto> GetById(int id)
         {
-            return await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Products.FindAsync(id);
         }
 
-        public async Task<bool> Update(ProductDto product)
+        public void Update(ProductDto product)
         {
-            var exisitngProduct = await _context.Products
-                .SingleOrDefaultAsync(x => x.Id == product.Id);
-
-            if (exisitngProduct == null)
-            {
-                return false;
-            }
-
-            exisitngProduct.ArrivalTime = product.ArrivalTime;
-            exisitngProduct.Depth = product.Depth;
-            exisitngProduct.Description = product.Description;
-            exisitngProduct.Height = product.Height;
-            exisitngProduct.Id = product.Id;
-            exisitngProduct.Name = product.Name;
-            exisitngProduct.Pallet = product.Pallet;
-            exisitngProduct.PalletId = product.PalletId;
-            exisitngProduct.Picture = product.Picture;
-            exisitngProduct.Priority = product.Priority;
-            exisitngProduct.Weight = product.Weight;
-            exisitngProduct.Width = product.Width;
-
-            _context.Update(exisitngProduct);
-            var saveResult = await _context.SaveChangesAsync();
-            return saveResult == 1;
+            _context.Update(product);
         }
 
-        public async Task<bool> Delete(int id)
+        public void Delete(ProductDto product)
         {
-            var deleted = false;
-            var product = _context.Products
-                .SingleOrDefaultAsync(x => x.Id == id);
-
-            if (product != null)
-            {
-                _context.Remove(product);
-                deleted = true;
-            }
-            else
-            {
-                deleted = false;
-            }
-
-            var saveResult = await _context.SaveChangesAsync();
-            return saveResult == 1 && deleted == true;
+            _context.Products.Remove(product);
         }
     }
 }
