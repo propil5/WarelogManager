@@ -16,6 +16,7 @@ using WarelogManager.Model.Mapping;
 using WarelogManager.Model.Services.Warehouse.Interface;
 using WarelogManager.Model.Services.Warehouse;
 using WarelogManager.Model.Repositories.UnitOfWork;
+using AutoMapper;
 
 namespace WarelogManager.Server
 {
@@ -45,6 +46,15 @@ namespace WarelogManager.Server
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new ModelToResourceProfile());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
 
             //Repositories
             services.AddScoped<ICompanyRepository, CompanyRepository>()

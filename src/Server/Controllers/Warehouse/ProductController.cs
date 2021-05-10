@@ -56,7 +56,8 @@ namespace WarelogManager.Client.Controllers.Warehouse
                 return BadRequest(result.Message);
             }
 
-            var productResorce = _mapper.Map<ProductDto, ProductResource>(result.Dto as ProductDto);
+            productDto = result.Dto as ProductDto;
+            var productResorce = _mapper.Map<ProductResource, ProductDto>(productDto);
             return Ok(productResorce);
         }
 
