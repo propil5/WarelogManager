@@ -5,13 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WarelogManager.Client.Resources;
-using WarelogManager.Client.Resources.Warehouse.Company;
-using WarelogManager.Client.Warehouse.Company;
-using WarelogManager.Model.Common.Queries;
 using WarelogManager.Model.DataTransfer.Warehouse;
 using WarelogManager.Model.Extensions;
 using WarelogManager.Model.Services.Warehouse.Interface;
+using WarelogManager.Shared.Resources.Warehouse.Company;
 
 namespace WarelogManager.Client.Controllers.Warehouse
 {

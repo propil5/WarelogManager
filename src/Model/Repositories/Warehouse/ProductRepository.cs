@@ -21,6 +21,7 @@ namespace WarelogManager.Model.Repositories.Warehouse
         public async Task<int?> Add(ProductDto product)
         {
             await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
             return product.Id;
         }
 

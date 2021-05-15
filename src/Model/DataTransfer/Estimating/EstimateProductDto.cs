@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WarelogManager.Model.DataTransfer.Common;
 
 namespace WarelogManager.Model.DataTransfer.Estimating
 {
@@ -11,8 +13,12 @@ namespace WarelogManager.Model.DataTransfer.Estimating
     /// seting proiorty /
     /// setting some status of probability of huge demand compared to different items in the near future
     /// </summary>
-    public class EstimateProductDemandDto
+    [Table("EstimateProduct")]
+    public class EstimateProductDto : BaseEntity
     {
-
+        public string EstimationDate { get; set; }
+        public int EstimationStatusId { get; set; }
+        public EstimateStatusDto EstimationStatus { get; set; }
+        public bool? IsImportant { get; set; }
     }
 }

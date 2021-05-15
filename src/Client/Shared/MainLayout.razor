@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @using Blazored.Toast.Configuration
-@inject IJSRuntime js;
+
+@inject IJSRuntime js
 
 
 <div class="page @mode">
@@ -12,7 +13,7 @@
         <div class="top-row px-4 auth">
             <LoginDisplay />
             <div class="custom-control custom-switch">
-              <input type="checkbox" class="custom-control-input" id="darkModeSwitch" @onchange="ModeChangedAsync">
+              <input type="checkbox" class="custom-control-input" id="darkModeSwitch" @bind="DarkMode" />
               <label class="custom-control-label" for="darkModeSwitch">Dark Mode</label>
             </div>
             <NavLink href="/aboout">About</NavLink><br />
@@ -22,7 +23,7 @@
             @Body
         </div>
     </div>
-</div>
+</div> 
 
 <BlazoredToasts Position="ToastPosition.TopCenter"
                 Timeout="15"
@@ -35,19 +36,27 @@
 </BlazoredToasts>
 
 @code{
-    private bool darkMode = false;
-    private string mode => darkMode ? "dark-mode" : "";
+    private bool darkMode;
+    private bool DarkMode
+    {
+        get => darkMode;
+        set
+        {
+            darkMode = value;
+            ModeChangedAsync();
+        }
+    }
+    private string mode => DarkMode ? "dark-mode" : "";
     private const string keyDarkMode = "dark-mode";
 
     protected override async Task OnInitializedAsync()
     {
         var darkModeStorageSetting = await js.InvokeAsync<string>("readLocalStorage", keyDarkMode);
-        darkMode = darkModeStorageSetting == "true" ;
+        DarkMode = darkModeStorageSetting.ToLower().Contains("true");
     }
 
-    private async Task ModeChangedAsync(ChangeEventArgs e)
+    private async Task ModeChangedAsync()
     {
-        darkMode = (Boolean) e.Value;
-        await js.InvokeVoidAsync("addToLocalStorage", keyDarkMode, darkMode.ToString());
+        await js.InvokeVoidAsync("addToLocalStorage", keyDarkMode, DarkMode);
     }
 }

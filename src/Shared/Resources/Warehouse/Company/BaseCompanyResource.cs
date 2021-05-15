@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WarelogManager.Client.Warehouse.Company
+namespace WarelogManager.Shared.Resources.Warehouse.Company
 {
     public class BaseCompanyResource
     {

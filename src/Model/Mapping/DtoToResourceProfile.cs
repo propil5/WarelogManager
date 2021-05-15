@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WarelogManager.Client.Resources.Warehouse.Company;
-using WarelogManager.Client.Warehouse.Company;
 using WarelogManager.Model.Common.Response;
 using WarelogManager.Model.DataTransfer.Warehouse;
+using WarelogManager.Shared.Resources.Warehouse.Company;
 using WarelogManager.Shared.Resources.Warehouse.Product;
 
 namespace WarelogManager.Model.Mapping
@@ -18,11 +17,12 @@ namespace WarelogManager.Model.Mapping
         {
             CreateMap<object, ProductDto>();
             CreateMap<BaseProductResource, ProductDto>();
+            CreateMap<BaseProductResource, ProductDto>();
+            CreateMap<ProductDto, ProductResource>();
             CreateMap<ProductResource, ProductDto>();
             CreateMap<CompanyResource, CompanyDto>();
             CreateMap<BaseCompanyResource, CompanyDto>();
-            CreateMap<BaseCompanyResource, CompanyDto>();
-            CreateMap<BaseCompanyResource, CompanyDto>();
+            CreateMap<CompanyDto, CompanyResource>();
         }
     }
 }

@@ -7,7 +7,6 @@ using Microsoft.Extensions.Options;
 using System.IO;
 using WarelogManager.Model.DataTransfer.Warehouse;
 using WarelogManager.Model.DataTransfer.Common;
-using WarelogManager.Model.DataTransfer.User;
 
 namespace WarelogManager.Model.Mapping
 {

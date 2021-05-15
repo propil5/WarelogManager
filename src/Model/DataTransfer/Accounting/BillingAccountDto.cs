@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Common;
 
-namespace WarelogManager.Model.DataTransfer.User
+namespace WarelogManager.Model.DataTransfer.Accounting
 {
-    [Table("Address")]
-    public class AddressDto : BaseEntity
+    [Table("BillingAccount")]
+    public class BillingAccountDto : BaseEntity
     {
+        public string Name { get; set; }
         public string Street { get; set; }
         public string PostCode { get; set; }
-        public string HouseNumber { get; set; }
-        public string FlatNumber { get; set; }
+        public string Nip { get; set; }
+        public double Balance { get; set; }
     }
 }

@@ -1,0 +1,87 @@
+﻿@page "/companies"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using WarelogManager.Shared.Resources.Warehouse.Company
+@attribute [Authorize]
+@inject NavigationManager NavManager
+@inject HttpClient Http
+@inject IToastService toastService
+
+<h1>Comapnies</h1>
+
+<p>Companies stored in the database: </p>
+
+@if (companies == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div>
+    <button type="button" class="btn btn-success" @onclick="() => RedirectToCompanyEdit()">Add</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var company in companies)
+            {
+                <tr>
+                    <td>@company.Id</td>
+                    <td>@company.AddresId</td>
+                    <td>
+                        <button type="button" class="btn btn-warning" disabled=@IsTaskRunning 
+                                @onclick="() => RedirectToCompanyEdit(company.Id)">Edit</button>
+
+                        <button type="button" class="btn btn-danger" disabled=@IsTaskRunning
+                                @onclick="() => RemoveCompanyAsync(company.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+}
+
+@code {
+    private CompanyResource[] companies;
+    bool IsTaskRunning = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetCompaniesAsync();        
+    }
+
+    private async Task GetCompaniesAsync()
+    {
+        companies = await Http.GetFromJsonAsync<CompanyResource[]>("api/company/");
+    }
+
+    private void RedirectToCompanyEdit(int? id = null)
+    {
+        if(id == null)
+        {
+            NavManager.NavigateTo($"/company/add");
+        }
+        else
+        {
+            NavManager.NavigateTo($"/company/edit/{id}");
+        }
+    }
+    
+    private async Task RemoveCompanyAsync(int id)
+    {
+        IsTaskRunning = true;
+        var result = await Http.DeleteAsync($"api/companies/{id}");
+        if (result.IsSuccessStatusCode)
+        {
+            toastService.ShowWarning($"Succesfully removed coampny with id: {id}.");
+            await GetCompaniesAsync();
+        }
+        IsTaskRunning = false;
+    }
+}

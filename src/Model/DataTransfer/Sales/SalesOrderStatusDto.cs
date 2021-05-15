@@ -5,12 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Common;
 
-namespace WarelogManager.Model.DataTransfer.Order
+namespace WarelogManager.Model.DataTransfer.Sales
 {
-    public class OrderDto : BaseEntity
+    public class SalesOrderStatusDto : BaseEntity
     {
-        public int OrderBy { get; set; }
-        public DateTime OrderDateTime { get; set; }
-
+        public string Name { get; set; }
     }
 }

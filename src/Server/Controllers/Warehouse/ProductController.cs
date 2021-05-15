@@ -57,7 +57,7 @@ namespace WarelogManager.Client.Controllers.Warehouse
             }
 
             productDto = result.Dto as ProductDto;
-            var productResorce = _mapper.Map<ProductResource, ProductDto>(productDto);
+            var productResorce = _mapper.Map<ProductDto, ProductResource>(productDto);
             return Ok(productResorce);
         }
 

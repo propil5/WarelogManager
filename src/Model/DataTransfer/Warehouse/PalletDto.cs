@@ -16,5 +16,7 @@ namespace WarelogManager.Model.DataTransfer.Warehouse
         public CompanyDto Owner { get; set; }
         public DateTime ArrivalTime { get; set; }
         public DateTime DispacheTime { get; set; }
+
+        public ICollection<ProductDto> Products { get; set; }
     }
 }

@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Common;
 
-namespace WarelogManager.Model.DataTransfer.Sales
+namespace WarelogManager.Model.DataTransfer.Payment
 {
-    public class SalesOrderLineItem : BaseEntity
+    public class PaymentMethodDto : BaseEntity
     {
-
+        public string PaymentName { get; set; }
     }
 }

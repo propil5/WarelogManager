@@ -87,8 +87,8 @@ else
         var result = await Http.PostAsJsonAsync("api/product", product);
         if (result.IsSuccessStatusCode)
         {
-            var id = await result.Content.ReadFromJsonAsync<int>();
-            toastService.ShowSuccess($"Succesfully added product with id: {id}");
+            var productResource = await result.Content.ReadFromJsonAsync<ProductResource>();
+            toastService.ShowSuccess($"Succesfully added product with id: {productResource.Id}");
         }
         else
         {

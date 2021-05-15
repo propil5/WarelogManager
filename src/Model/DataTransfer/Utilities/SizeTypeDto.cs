@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WarelogManager.Model.DataTransfer.Order
+namespace WarelogManager.Model.DataTransfer.Utilities
 {
-    class OrderItemsDto
+    class SizeType
     {
     }
 }

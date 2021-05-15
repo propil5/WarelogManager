@@ -9,6 +9,7 @@ namespace WarelogManager.Model.DataTransfer.Payment
 {
     public class PaymentDto : BaseEntity
     {
-
+        public int PayedById { get; set; }
+        public ApplicationUser PaidBy { get; set; }
     }
 }

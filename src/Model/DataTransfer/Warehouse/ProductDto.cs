@@ -22,6 +22,6 @@ namespace WarelogManager.Model.DataTransfer.Warehouse
         public double Width { get; set; }
         public double Depth { get; set; }
         public int PalletId { get; set; }
-        public virtual PalletDto Pallet { get; set; }
+        public PalletDto Pallet { get; set; }
     }
 }
