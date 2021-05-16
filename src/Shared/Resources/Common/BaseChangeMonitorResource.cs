@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WarelogManager.Client.Resources.Common;
 
-namespace WarelogManager.Shared.Resources.Warehouse.Product
+namespace WarelogManager.Client.Resources.Common
 {
-    public class ProductResource : BaseProductResource
+    public class BaseChangeMonitorResource : BaseResource
     {
-        public int Id { get; set; }
         public string AddedBy { get; set; }
         public DateTime AddedDate { get; set; }
         public string EditedBy { get; set; }

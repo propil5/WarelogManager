@@ -1,0 +1,114 @@
+﻿@page "/inventory/items"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using WarelogManager.Shared.Resources.Warehouse.InventoryItem
+@attribute [Authorize]
+@inject NavigationManager NavManager
+@inject HttpClient Http
+@inject IToastService toastService
+
+<h1>Inventory Items</h1>
+
+<p>Products stored in the database: </p>
+
+@if (inventoryItems == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div>
+    <button type="button" class="btn btn-success" @onclick="() => RedirectToItemEdit()">Add</button>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>SKULabel</th>
+                <th>Product Id</th>
+                <th>Unit Of Measure</th>
+                <th>Descritption</th>
+                <th>Size Id</th>
+                <th>Added Date</th>
+                <th>Added By</th>
+                <th>AvailableQuantity</th>
+                <th>Total Quantity</th>
+                @if(DisplayEditColumn)
+                {
+                    <th>Eddited By</th>
+                    <th>Edited Date</th>
+                }
+                <th>Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var inventoryItem in inventoryItems)
+            {
+                <tr>
+                    <td>@inventoryItem.SKULabel</td>
+                    <td>@inventoryItem.ProductId</td>
+                    <td>@inventoryItem.UnitOfMeasure</td>
+                    <td>@inventoryItem.Descritption</td>
+                    <td>@inventoryItem.SizeId</td>
+                    <td>@inventoryItem.AddedDate</td>
+                    <td>@inventoryItem.AddedByEmail</td>
+                    <td>@inventoryItem.AvailableQuantity</td>
+                    <td>@inventoryItem.TotalQuantity</td>
+
+                        @if(DisplayEditColumn)
+                        {
+                            <td>@inventoryItem.EdditedByEmail</td>
+                            <td>@inventoryItem.EditedDate</td>
+                        }
+                    <td>
+                        <button type="button" class="btn btn-warning" disabled=@IsTaskRunning 
+                                @onclick="() => RedirectToItemEdit(inventoryItem.Id)">Edit</button>
+
+                        <button type="button" class="btn btn-danger" disabled=@IsTaskRunning
+                                @onclick="() => RemoveItemAsync(inventoryItem.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+}
+
+@code {
+    private InventoryItemResource[] inventoryItems;
+    bool IsTaskRunning = false;
+    bool DisplayEditColumn => inventoryItems?.Any(x => x.EditedById != null) ?? false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetItemsAsync();        
+    }
+
+    private async Task GetItemsAsync()
+    {
+        inventoryItems = await Http.GetFromJsonAsync<InventoryItemResource[]>("api/inventory/item");
+    }
+
+    private void RedirectToItemEdit(int? id = null)
+    {
+        if(id == null)
+        {
+            NavManager.NavigateTo($"/inventory/items/add");
+        }
+        else
+        {
+            NavManager.NavigateTo($"/inventory/items/edit/{id}");    
+        }
+    }
+    
+    private async Task RemoveItemAsync(int id)
+    {
+        IsTaskRunning = true;
+        var result = await Http.DeleteAsync($"api/inventory/item/{id}");
+        if (result.IsSuccessStatusCode)
+        {
+            toastService.ShowWarning($"Succesfully removed inventory item with id: {id}.");
+            await GetItemsAsync();
+        }
+        IsTaskRunning = false;
+    }
+}

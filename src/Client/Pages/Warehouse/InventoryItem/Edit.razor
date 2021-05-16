@@ -1,0 +1,152 @@
+﻿@page "/inventory/items/add"
+@page "/inventory/items/edit/{Id:int}"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using WarelogManager.Shared.Resources.Warehouse.Product
+@using WarelogManager.Shared.Resources.Warehouse.InventoryItem
+@using Blazored.Typeahead;
+
+@inject NavigationManager NavManager
+@inject HttpClient Http
+@inject IToastService toastService;
+
+
+<h3>Add new inventory item</h3>
+<EditForm Model="@inventoryItem" OnValidSubmit="HandleValidSubmit" width="40%">
+    <DataAnnotationsValidator/>
+    <ValidationSummary />
+
+    <p>
+        <label>
+            SKU Label:
+            <InputText id="SKULabel" @bind-Value="@inventoryItem.SKULabel" />
+        </label>
+    </p>
+    <p>
+        <label>
+            UnitOfMeasure:
+            <InputNumber id="UnitOfMeasure" @bind-Value="@inventoryItem.UnitOfMeasure" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Description:
+            <InputText id="Description" @bind-Value="@inventoryItem.Descritption" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Available Quantity:
+            <InputNumber id="AvailableQuantity" @bind-Value="@inventoryItem.AvailableQuantity" />
+        </label>
+    </p>
+    <p>
+        <label>
+            Total Quantity:
+            <InputNumber id="AvailableQuantity" @bind-Value="@inventoryItem.TotalQuantity" />
+        </label>
+    </p>
+    <p>
+        <BlazoredTypeahead SearchMethod="SearchProducts"
+                            ConvertMethod="ConvertProduct"
+                            @bind-Value="@inventoryItem.ProductId"
+                            placeholder="Search by name"
+                            EnableDropDown
+                            width="20%">
+            <SelectedTemplate Context="personId">
+                @{
+                    var selectedProduct = LoadSelectedProduct(personId);
+
+                    <text>ID: @selectedProduct?.Id, @selectedProduct?.Name </text>
+                }
+            </SelectedTemplate>
+            <ResultTemplate Context="product">
+                @product.Name (Id: @product.Id)
+            </ResultTemplate>
+        </BlazoredTypeahead>
+        <ValidationMessage For="@(() => inventoryItem.ProductId)" />
+    </p>
+
+    @if (IsUpdate)
+    {
+        <button type="submit" class="btn btn-warning" disabled=@IsTaskRunning @onclick="UpdateItemAsync">Update</button>
+    }
+    else
+    {
+        <button type="submit" class="btn btn-success" disabled=@IsTaskRunning @onclick="HandleValidSubmit">Add</button>
+    }
+
+</EditForm>
+
+
+
+@code {
+    [Parameter]
+    public int? Id { get; set; }
+    public bool IsUpdate{ get; set; }
+    private InventoryItemResource inventoryItem { get; set; }
+    private ProductResource[] products { get; set; }
+    //private ProductResource product { get; set; }
+    bool IsTaskRunning = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsTaskRunning = true;
+        inventoryItem = new InventoryItemResource();
+        IsUpdate = false;
+        await GetProductsAsync();
+        if (Id != null)
+        {
+            inventoryItem = await Http.GetFromJsonAsync<InventoryItemResource>($"/api/inventory/item/{Id}");
+            IsUpdate = true;
+        }
+        IsTaskRunning = false;
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        IsTaskRunning = true;
+        var result = await Http.PostAsJsonAsync("api/inventory/item", inventoryItem);
+        if (result.IsSuccessStatusCode)
+        {
+            var productResource = await result.Content.ReadFromJsonAsync<InventoryItemResource>();
+            toastService.ShowSuccess($"Succesfully added inventory item with id: {productResource.Id}");
+
+        }
+        else
+        {
+            toastService.ShowError($"Could not add invnetory item.");
+        }
+        IsTaskRunning = false;
+    }
+
+    private async Task UpdateItemAsync()
+    {
+        IsTaskRunning = true;
+        var result = await Http.PutAsJsonAsync($"api/inventory/item/{inventoryItem.Id}", inventoryItem);
+        if (result.IsSuccessStatusCode)
+        {
+            toastService.ShowSuccess($"Succesfully updated ivnentory item with id: {inventoryItem.Id}");
+            NavManager.NavigateTo($"/inventory/items");
+        }
+        else
+        {
+            toastService.ShowError($"Could not update inventory item.");
+        }
+        IsTaskRunning = false;
+    }
+
+    private async Task GetProductsAsync()
+    {
+        products = await Http.GetFromJsonAsync<ProductResource[]>("api/product");
+    }
+
+    private async Task<IEnumerable<ProductResource>> SearchProducts(string searchText) 
+    {
+        //if(searchText)
+        return await Task.FromResult(products?.Where(x => x.Name.ToLower().Contains(searchText.ToLower())).ToList());
+    }
+
+    private int? ConvertProduct(ProductResource product) => product?.Id;
+    private ProductResource LoadSelectedProduct(int? id) => products.FirstOrDefault(p => p.Id == id);
+}

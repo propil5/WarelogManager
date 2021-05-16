@@ -10,7 +10,7 @@ using WarelogManager.Model.DataTransfer.Common;
 namespace WarelogManager.Model.DataTransfer.Warehouse
 {
     [Table("Product")]
-    public class ProductDto : BaseEntity
+    public class ProductDto : ChangeTrackedEntity
     {
         public string Name { get; set; }
         public DateTime ArrivalTime { get; set; }
@@ -23,5 +23,6 @@ namespace WarelogManager.Model.DataTransfer.Warehouse
         public double Depth { get; set; }
         public int? PalletId { get; set; }
         public PalletDto Pallet { get; set; }
+
     }
 }

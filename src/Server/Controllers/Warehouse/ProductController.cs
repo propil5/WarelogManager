@@ -9,6 +9,9 @@ using WarelogManager.Model.Extensions;
 using AutoMapper;
 using WarelogManager.Shared.Resources.Warehouse.Product;
 using WarelogManager.Model.Services.Warehouse.Interface;
+using WarelogManager.Model.DataTransfer.Common;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace WarelogManager.Client.Controllers.Warehouse
 {
@@ -19,26 +22,42 @@ namespace WarelogManager.Client.Controllers.Warehouse
     {
         private readonly IProductService _productService;
         private readonly IMapper _mapper;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public ProductController(IProductService productService, IMapper mapper)
+        public ProductController(IProductService productService, IMapper mapper,
+            UserManager<ApplicationUser> userManager)
         {
+            _userManager = userManager;
             _productService = productService;
             _mapper = mapper;
         }
 
         // GET api/product
         [HttpGet]
-        public async Task<IEnumerable<ProductDto>> Get()
+        public async Task<IEnumerable<ProductResource>> Get()
         {
             var products = await _productService.Get();
-            return products;
+            var productResources = new List<ProductResource>();
+            foreach (var product in products)
+            {
+                var productResource = _mapper.Map<ProductDto, ProductResource>(product);
+                productResource.AddedByEmail = (await _userManager.FindByIdAsync(product.AddedById))?.Email;
+                productResource.EdditedByEmail = (await _userManager.FindByIdAsync(product.AddedById))?.Email;
+                productResources.Add(productResource);
+            }
+
+            return productResources;
         }
 
         // GET api/product/5
         [HttpGet("{id:int}")]
-        public async Task<ProductDto> GetById(int id)
+        public async Task<ProductResource> GetById(int id)
         {
-            return  await _productService.Get(id);
+            var product = await _productService.Get(id);
+            var productResource = _mapper.Map<ProductDto, ProductResource>(product);
+            productResource.AddedByEmail = (await _userManager.FindByIdAsync(product.AddedById))?.Email;
+            productResource.EdditedByEmail = (await _userManager.FindByIdAsync(product.EditedById))?.Email;
+            return productResource;
         }
 
         // POST api/product
@@ -49,6 +68,7 @@ namespace WarelogManager.Client.Controllers.Warehouse
                 return BadRequest(ModelState.GetErrorMessages());
 
             var productDto = _mapper.Map<BaseProductResource, ProductDto>(product);
+            productDto.AddedById = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var result = await _productService.Add(productDto);
 
             if (!result.Success)
@@ -63,12 +83,13 @@ namespace WarelogManager.Client.Controllers.Warehouse
 
         // PUT api/product
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody]ProductResource product)
+        public async Task<IActionResult> Update(int id, [FromBody] ProductResource product)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             var productDto = _mapper.Map<ProductResource, ProductDto>(product);
+            productDto.EditedById = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var result = await _productService.Update(id, productDto);
 
             if (!result.Success)
@@ -94,5 +115,11 @@ namespace WarelogManager.Client.Controllers.Warehouse
             var productResource = _mapper.Map<ProductDto, ProductResource>(result.Dto as ProductDto);
             return Ok(productResource);
         }
+
+        private async Task<ApplicationUser> GetCurrentUserAsync()
+        {
+            return await _userManager.GetUserAsync(HttpContext.User);
+        }
+         
     }
 }

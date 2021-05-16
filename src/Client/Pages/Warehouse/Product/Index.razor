@@ -28,8 +28,16 @@ else
                 <th>Weight</th>
                 <th>Width</th>
                 <th>Height</th>
-                <th>PalletId</th>
+                <th>Pallet Id</th>
+                <th>Added By</th>
+                <th>Added Date</th>
+                @if(DisplayEditColumn)
+                {
+                    <th>Eddited By</th>
+                    <th>Edited Date</th>
+                }
                 <th>Action</th>
+
             </tr>
         </thead>
         <tbody>
@@ -43,6 +51,14 @@ else
                     <td>@product.Width</td>
                     <td>@product.Height</td>
                     <td>@product.PalletId</td>
+                    <td>@product.AddedByEmail</td>
+                    <td>@product.AddedDate</td>
+
+                        @if(DisplayEditColumn)
+                        {
+                            <td>@product.EdditedByEmail</td>
+                            <td>@product.EditedDate</td>
+                        }
                     <td>
                         <button type="button" class="btn btn-warning" disabled=@IsTaskRunning 
                                 @onclick="() => RedirectToProductEdit(product.Id)">Edit</button>
@@ -60,6 +76,7 @@ else
 @code {
     private ProductResource[] products;
     bool IsTaskRunning = false;
+    bool DisplayEditColumn => products?.Any(x => x.EditedBy != null) ?? false;
 
     protected override async Task OnInitializedAsync()
     {

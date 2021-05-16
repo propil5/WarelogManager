@@ -26,6 +26,7 @@ namespace WarelogManager.Model.Services.Warehouse
         {
             try
             {
+                product.AddedDate = DateTime.Now;
                 var id = await _productRepository.Add(product);
                 product.Id = id ?? 0;
 
@@ -60,7 +61,7 @@ namespace WarelogManager.Model.Services.Warehouse
             existingProduct.Depth = product.Depth;
             existingProduct.Description = product.Description;
             existingProduct.Height = product.Height;
-            existingProduct.Id = product.Id;
+            existingProduct.Id = product.Id; 
             existingProduct.Name = product.Name;
             existingProduct.Pallet = product.Pallet;
             existingProduct.PalletId = product.PalletId;
@@ -68,6 +69,8 @@ namespace WarelogManager.Model.Services.Warehouse
             existingProduct.Priority = product.Priority;
             existingProduct.Weight = product.Weight;
             existingProduct.Width = product.Width;
+            existingProduct.EditedDate = DateTime.Now;
+            existingProduct.EditedBy = product.EditedBy;
 
             try
             {

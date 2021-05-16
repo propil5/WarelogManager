@@ -34,8 +34,11 @@ namespace WarelogManager.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
+            {
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                        Configuration.GetConnectionString("DefaultConnection"));
+                options.EnableSensitiveDataLogging(true);
+            });
 
             services.AddDatabaseDeveloperPageExceptionFilter();
 
@@ -60,12 +63,14 @@ namespace WarelogManager.Server
             services.AddScoped<ICompanyRepository, CompanyRepository>()
                     .AddScoped<IPalletRepository, PalletRepository>()
                     .AddScoped<IPlantRepository, PlantRepository>()
-                    .AddScoped<IProductRepository, ProductRepository>();
+                    .AddScoped<IProductRepository, ProductRepository>()
+                    .AddScoped<IInventoryItemRepository, InventoryItemRepository>();
 
 
             //Services
             services.AddScoped<ICompanyService, CompanyService>()
-                    .AddScoped<IProductService, ProductService>();
+                    .AddScoped<IProductService, ProductService>()
+                    .AddScoped<IInventoryItemService, InventoryItemService>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

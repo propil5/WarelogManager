@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WarelogManager.Model.Mapping;
 
-namespace WarelogManager.Model.Repositories
+namespace WarelogManager.Model.Mapping.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210516120523_AddModificationMonitoringToProduct")]
+    partial class AddModificationMonitoringToProduct
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -959,7 +961,7 @@ namespace WarelogManager.Model.Repositories
                     b.Property<string>("EditedById")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("EditedDate")
+                    b.Property<DateTime?>("EditedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("ProductId")
@@ -1044,9 +1046,6 @@ namespace WarelogManager.Model.Repositories
                     b.Property<string>("AddedById")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("AddedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("ArrivalTime")
                         .HasColumnType("datetime2");
 
@@ -1055,12 +1054,6 @@ namespace WarelogManager.Model.Repositories
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EditedById")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("EditedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<double>("Height")
                         .HasColumnType("float");
@@ -1077,6 +1070,9 @@ namespace WarelogManager.Model.Repositories
                     b.Property<int>("Priority")
                         .HasColumnType("int");
 
+                    b.Property<string>("UpdatedById")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<double>("Weight")
                         .HasColumnType("float");
 
@@ -1087,9 +1083,9 @@ namespace WarelogManager.Model.Repositories
 
                     b.HasIndex("AddedById");
 
-                    b.HasIndex("EditedById");
-
                     b.HasIndex("PalletId");
+
+                    b.HasIndex("UpdatedById");
 
                     b.ToTable("Product");
                 });
@@ -1454,19 +1450,19 @@ namespace WarelogManager.Model.Repositories
                         .WithMany()
                         .HasForeignKey("AddedById");
 
-                    b.HasOne("WarelogManager.Model.DataTransfer.Common.ApplicationUser", "EditedBy")
-                        .WithMany()
-                        .HasForeignKey("EditedById");
-
                     b.HasOne("WarelogManager.Model.DataTransfer.Warehouse.PalletDto", "Pallet")
                         .WithMany("Products")
                         .HasForeignKey("PalletId");
 
+                    b.HasOne("WarelogManager.Model.DataTransfer.Common.ApplicationUser", "UpdatedBy")
+                        .WithMany()
+                        .HasForeignKey("UpdatedById");
+
                     b.Navigation("AddedBy");
 
-                    b.Navigation("EditedBy");
-
                     b.Navigation("Pallet");
+
+                    b.Navigation("UpdatedBy");
                 });
 
             modelBuilder.Entity("WarelogManager.Model.DataTransfer.Sales.SalesOrderDto", b =>
