@@ -14,7 +14,7 @@ namespace WarelogManager.Model.DataTransfer.Inbound
     {
         public string Name { get; set; }
         public int AddressId { get; set; }
-        public int BillingAccId { get; set; }
+        public int? BillingAccId { get; set; }
         public BillingAccountDto BillingAcc { get; set; }
         public int Priority { get; set; }
     }

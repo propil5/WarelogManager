@@ -15,7 +15,7 @@ namespace WarelogManager.Model.DataTransfer.Inbound
     {
         public int SupplyOrderId { get; set; }
         public SupplyOrderDto SupplyOrder { get; set; }
-        public int ItemId { get; set; }
+        public int? ItemId { get; set; }
         public SalesOrderLineDto Item { get; set; }
     }
 }

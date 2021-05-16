@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WarelogManager.Model.Mapping;
 
-namespace WarelogManager.Model.Repositories
+namespace WarelogManager.Model.Mapping.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210516102837_TablesForManyDepartments")]
+    partial class TablesForManyDepartments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -849,35 +851,6 @@ namespace WarelogManager.Model.Repositories
                     b.ToTable("Place");
                 });
 
-            modelBuilder.Entity("WarelogManager.Model.DataTransfer.Utilities.PositionDto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<double>("Latitude")
-                        .HasColumnType("float");
-
-                    b.Property<double>("Longitude")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("PostitionDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("Position");
-                });
-
             modelBuilder.Entity("WarelogManager.Model.DataTransfer.Utilities.SizeDto", b =>
                 {
                     b.Property<int>("Id")
@@ -1374,15 +1347,6 @@ namespace WarelogManager.Model.Repositories
                         .HasForeignKey("SalesOrderId");
 
                     b.Navigation("SalesOrder");
-                });
-
-            modelBuilder.Entity("WarelogManager.Model.DataTransfer.Utilities.PositionDto", b =>
-                {
-                    b.HasOne("WarelogManager.Model.DataTransfer.Common.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("WarelogManager.Model.DataTransfer.Warehouse.CompanyDto", b =>

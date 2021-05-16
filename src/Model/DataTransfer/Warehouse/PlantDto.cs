@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Common;
-using WarelogManager.Model.DataTransfer.User;
 
 namespace WarelogManager.Model.DataTransfer.Warehouse
 {
@@ -13,8 +12,8 @@ namespace WarelogManager.Model.DataTransfer.Warehouse
     public class PlantDto : BaseEntity
     {
         public string Name { get; set; }
-        [ForeignKey("Address")]
-        public int AddressId { get; set; }
+        public string PlantTypeId { get; set; }
+        public int? AddressId { get; set; }
         public AddressDto Address { get; set; }
     }
 }

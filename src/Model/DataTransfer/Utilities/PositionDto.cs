@@ -7,13 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Common;
 
-namespace WarelogManager.Model.DataTransfer.Common
+namespace WarelogManager.Model.DataTransfer.Utilities
 {
     [Table("Position")]
-    [Keyless]
     public class PositionDto : BasePositionDto
     {
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public ApplicationUser User {get; set;}
     }
 }

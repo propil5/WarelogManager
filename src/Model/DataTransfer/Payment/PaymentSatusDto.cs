@@ -5,15 +5,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WarelogManager.Model.DataTransfer.Common;
 
-namespace WarelogManager.Model.DataTransfer.Sales
+namespace WarelogManager.Model.DataTransfer.Payment
 {
-    [Table("SalesOrderStatus")]
-    public class SalesOrderStatusDto
+    [Table("PaymentStatus")]
+    public class PaymentSatusDto
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

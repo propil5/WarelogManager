@@ -8,13 +8,13 @@ using WarelogManager.Model.DataTransfer.Common;
 
 namespace WarelogManager.Model.DataTransfer.Accounting
 {
-    [Table("BillingAccount")]
-    public class BillingAccountDto : BaseEntity
+    [Table("AccountingBalance")]
+    public class AccountingBalance : BaseEntity
     {
-        public string Name { get; set; }
-        public string Street { get; set; }
-        public string PostCode { get; set; }
-        public string Nip { get; set; }
+        public int? PaymentAccountId { get; set; } 
+        public BillingAccountDto PaymentAccount { get; set; }
+        public int? ForAccountId { get; set; }
+        public BillingAccountDto ForAccount { get; set; }
         public double Balance { get; set; }
     }
 }

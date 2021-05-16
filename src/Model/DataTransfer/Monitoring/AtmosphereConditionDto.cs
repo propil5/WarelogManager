@@ -1,16 +1,22 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Common;
+using WarelogManager.Model.DataTransfer.Utilities;
 
 namespace WarelogManager.Model.DataTransfer.Monitoring
 {
-    public class AtmosphereConditionDto : BasePositionDto
+    [Table("AtmosphereCondition")]
+    [Keyless]
+    public class AtmosphereConditionDto
     {
         public int PlaceId { get; set; }
         public PlaceDto Place { get; set; }
+        public DateTime MeasurementDate { get; set; }
         public double? Hummidity { get; set; }
         public double? TempC { get; set; }
         public double? PM10 { get; set; }

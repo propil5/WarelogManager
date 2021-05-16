@@ -17,7 +17,7 @@ namespace WarelogManager.Model.DataTransfer.Estimating
     public class EstimateProductDto : BaseEntity
     {
         public string EstimationDate { get; set; }
-        public int EstimationStatusId { get; set; }
+        public int? EstimationStatusId { get; set; }
         public EstimateStatusDto EstimationStatus { get; set; }
         public bool? IsImportant { get; set; }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,9 +13,9 @@ namespace WarelogManager.Model.DataTransfer.Accounting
     {
         public double TotalCost { get; set; }
         public double Tax { get; set; }
-        public int InvoiceFromId { get; set; }
+        public int? InvoiceFromId { get; set; }
         public BillingAccountDto InvoiceFrom { get; set; }
-        public int InvoiceForId { get; set; }
+        public int? InvoiceForId { get; set; }
         public BillingAccountDto InvoiceFor { get; set; }
 
     }

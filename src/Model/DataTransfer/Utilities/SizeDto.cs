@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using WarelogManager.Model.DataTransfer.Common;
 
 namespace WarelogManager.Model.DataTransfer.Utilities
 {
+    [Table("Size")]
     public class SizeDto : BaseEntity
     {
         public int GenderType { get; set; }
@@ -17,6 +19,5 @@ namespace WarelogManager.Model.DataTransfer.Utilities
         public string EuroShoeSize { get; set; }
         public string UkShoeSize { get; set; }
         public string UsShozeSize { get; set; }
-
     }
 }

@@ -6,14 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Common;
+using WarelogManager.Model.DataTransfer.Warehouse;
 
-namespace WarelogManager.Model.DataTransfer.Sales
+namespace WarelogManager.Model.DataTransfer.Inbound
 {
-    [Table("SalesOrderStatus")]
-    public class SalesOrderStatusDto
+    public class IncomingTransportDto
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        public string Name { get; set; }
+        public int? CompanyId { get; set; }
+        public CompanyDto Company { get; set; }
+        public int? StatusId { get; set; }
+        public TransportStatusDto Status { get; set; }
     }
 }
