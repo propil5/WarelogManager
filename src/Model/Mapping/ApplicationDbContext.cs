@@ -49,7 +49,7 @@ namespace WarelogManager.Model.Mapping
         //Payment 
         public virtual DbSet<PaymentDto> Payments { get; set; }
         public virtual DbSet<PaymentMethodDto> PaymentMethods { get; set; }
-        public virtual DbSet<PaymentSatusDto> PaymentStatuses { get; set; }
+        public virtual DbSet<PaymentStatusDto> PaymentStatuses { get; set; }
 
         //Sales
         public virtual DbSet<SalesOrderDto> SalesOrders { get; set; }
@@ -60,7 +60,7 @@ namespace WarelogManager.Model.Mapping
         //Utilities
         public virtual DbSet<AddressDto> Addresses { get; set; }
         public virtual DbSet<PlaceDto> Places { get; set; }
-        public virtual DbSet<PositionDto> Position { get; set; }
+        public virtual DbSet<PositionDto> Positions { get; set; }
         public virtual DbSet<SizeDto> Sizes { get; set; }
 
         //Warehouse

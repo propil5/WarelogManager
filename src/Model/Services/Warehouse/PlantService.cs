@@ -27,7 +27,6 @@ namespace WarelogManager.Model.Services.Warehouse
             try
             {
                 var id = await _plantRepository.Add(plant);
-                await _unitOfWork.CompleteAsync();
                 plant.Id = id ?? 0;
 
                 return new DtoResponse(plant);

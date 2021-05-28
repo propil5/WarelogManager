@@ -76,9 +76,17 @@ div.main {
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+.blazored-typeahead {
+    --background: #ffffff;
+    --font: #000000;
+    --higlight: #f7f7f7;
+    --higlight2: #e2e3e5;
+    --link: #0366d6;
+}

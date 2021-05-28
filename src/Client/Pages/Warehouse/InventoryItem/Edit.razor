@@ -4,6 +4,7 @@
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using WarelogManager.Shared.Resources.Warehouse.Product
 @using WarelogManager.Shared.Resources.Warehouse.InventoryItem
+@using WarelogManager.Shared.Enums
 @using Blazored.Typeahead;
 
 @inject NavigationManager NavManager
@@ -25,7 +26,12 @@
     <p>
         <label>
             UnitOfMeasure:
-            <InputNumber id="UnitOfMeasure" @bind-Value="@inventoryItem.UnitOfMeasure" />
+            <InputSelect @bind-Value="@inventoryItem.UnitOfMeasure">
+                @foreach (var value in Enum.GetValues(typeof(InventoryUnitOfMeasureEnum)))
+                {
+                    <option value="@((int)value)">@value</option>
+                }
+            </InputSelect>
         </label>
     </p>
     <p>

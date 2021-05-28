@@ -115,11 +115,5 @@ namespace WarelogManager.Client.Controllers.Warehouse
             var productResource = _mapper.Map<ProductDto, ProductResource>(result.Dto as ProductDto);
             return Ok(productResource);
         }
-
-        private async Task<ApplicationUser> GetCurrentUserAsync()
-        {
-            return await _userManager.GetUserAsync(HttpContext.User);
-        }
-         
     }
 }

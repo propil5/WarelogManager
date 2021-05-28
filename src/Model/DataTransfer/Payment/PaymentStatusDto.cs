@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace WarelogManager.Model.DataTransfer.Payment
 {
     [Table("PaymentStatus")]
-    public class PaymentSatusDto
+    public class PaymentStatusDto
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }

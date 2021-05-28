@@ -27,10 +27,8 @@ namespace WarelogManager.Model.Services.Warehouse
             try
             {
                 var id = await _companyRepository.Add(company);
-                await _unitOfWork.CompleteAsync();
 
                 company.Id = id ?? 0;
-
                 return new DtoResponse(company);
             }
             catch (Exception ex)

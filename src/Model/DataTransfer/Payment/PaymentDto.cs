@@ -18,7 +18,7 @@ namespace WarelogManager.Model.DataTransfer.Payment
         public int? OrderId { get; set; }
         public SalesOrderDto Order { get; set; }
         public int? PaymentStatusId { get; set; }
-        public PaymentSatusDto PaymentStatus { get; set; }
+        public PaymentStatusDto PaymentStatus { get; set; }
         public int? PaymentMethodId { get; set; }
         public PaymentMethodDto PaymentMethod { get; set; }
         public string Note { get; set; }

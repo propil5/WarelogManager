@@ -19,6 +19,7 @@ namespace WarelogManager.Model.Repositories.Warehouse
         public async Task<int?> Add(RackDto rack)
         {
             await _context.Racks.AddAsync(rack);
+            await _context.SaveChangesAsync();
             return rack.Id;
         }
 

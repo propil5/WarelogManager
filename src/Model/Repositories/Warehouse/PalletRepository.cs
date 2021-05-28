@@ -19,6 +19,7 @@ namespace WarelogManager.Model.Repositories.Warehouse
         public async Task<int?> Add(PalletDto pallet)
         {
             await _context.Pallets.AddAsync(pallet);
+            await _context.SaveChangesAsync();
             return pallet.Id;
         }
 

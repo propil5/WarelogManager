@@ -18,6 +18,7 @@ namespace WarelogManager.Model.Repositories.Warehouse
         public async Task<int?> Add(CompanyDto Company)
         {
             await _context.Companies.AddAsync(Company);
+            await _context.SaveChangesAsync();
             return Company.Id;
         }
 
