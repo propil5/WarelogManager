@@ -84,9 +84,6 @@ div.main {
 }
 
 .blazored-typeahead {
-    --background: #ffffff;
-    --font: #000000;
-    --higlight: #f7f7f7;
-    --higlight2: #e2e3e5;
-    --link: #0366d6;
+    background: #ffffff;
+    color: #000000;
 }

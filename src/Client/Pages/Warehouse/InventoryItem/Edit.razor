@@ -14,64 +14,82 @@
 
 <h3>Add new inventory item</h3>
 <EditForm Model="@inventoryItem" OnValidSubmit="HandleValidSubmit" width="40%">
-    <DataAnnotationsValidator/>
-    <ValidationSummary />
+    <div class="form-row">
+        <div class="col-md-8">
+            <DataAnnotationsValidator/>
+        <ValidationSummary />
+         <div class="form-group">
+            <p>
+                <label>
+                    SKU Label:
+                    <InputText id="SKULabel" @bind-Value="@inventoryItem.SKULabel" />
+                </label>
+            </p>
+        </div>
+        <div class="form-group">
+            <p>
+                <label>
+                    UnitOfMeasure:
+                    <InputSelect @bind-Value="@inventoryItem.UnitOfMeasure">
+                        @foreach (var value in Enum.GetValues(typeof(InventoryUnitOfMeasureEnum)))
+                        {
+                            <option value="@((int)value)">@value</option>
+                        }
+                    </InputSelect>
+                </label>
+            </p>
+        </div>
+        <div class="form-group">
+            <p>
+                <label>
+                    Description:
+                    <InputText id="Description" @bind-Value="@inventoryItem.Descritption" />
+                </label>
+            </p>
+        </div>
+        <div class="form-group">
+            <p>
+                <label>
+                    Available Quantity:
+                    <InputNumber id="AvailableQuantity" @bind-Value="@inventoryItem.AvailableQuantity" />
+                </label>
+            </p>
+        </div>
+        <div class="form-group">
+            <p>
+                <label>
+                    Total Quantity:
+                    <InputNumber id="AvailableQuantity" @bind-Value="@inventoryItem.TotalQuantity" />
+                </label>
+            </p>
+        </div>
+        <div>
+                <label>
+                    Product: 
+                    <BlazoredTypeahead SearchMethod="SearchProducts"
+                        ConvertMethod="ConvertProduct"
+                        @bind-Value="@inventoryItem.ProductId"
+                        placeholder="Search by product name"
+                        EnableDropDown
+                        label="blaka"
+                        width="20%">
+                    <SelectedTemplate Context="personId">
+                        @{
+                            var selectedProduct = LoadSelectedProduct(personId);
 
-    <p>
-        <label>
-            SKU Label:
-            <InputText id="SKULabel" @bind-Value="@inventoryItem.SKULabel" />
-        </label>
-    </p>
-    <p>
-        <label>
-            UnitOfMeasure:
-            <InputSelect @bind-Value="@inventoryItem.UnitOfMeasure">
-                @foreach (var value in Enum.GetValues(typeof(InventoryUnitOfMeasureEnum)))
-                {
-                    <option value="@((int)value)">@value</option>
-                }
-            </InputSelect>
-        </label>
-    </p>
-    <p>
-        <label>
-            Description:
-            <InputText id="Description" @bind-Value="@inventoryItem.Descritption" />
-        </label>
-    </p>
-    <p>
-        <label>
-            Available Quantity:
-            <InputNumber id="AvailableQuantity" @bind-Value="@inventoryItem.AvailableQuantity" />
-        </label>
-    </p>
-    <p>
-        <label>
-            Total Quantity:
-            <InputNumber id="AvailableQuantity" @bind-Value="@inventoryItem.TotalQuantity" />
-        </label>
-    </p>
-    <p>
-        <BlazoredTypeahead SearchMethod="SearchProducts"
-                            ConvertMethod="ConvertProduct"
-                            @bind-Value="@inventoryItem.ProductId"
-                            placeholder="Search by name"
-                            EnableDropDown
-                            width="20%">
-            <SelectedTemplate Context="personId">
-                @{
-                    var selectedProduct = LoadSelectedProduct(personId);
-
-                    <text>ID: @selectedProduct?.Id, @selectedProduct?.Name </text>
-                }
-            </SelectedTemplate>
-            <ResultTemplate Context="product">
-                @product.Name (Id: @product.Id)
-            </ResultTemplate>
-        </BlazoredTypeahead>
-        <ValidationMessage For="@(() => inventoryItem.ProductId)" />
-    </p>
+                            <text>ID: @selectedProduct?.Id, @selectedProduct?.Name </text>
+                        }
+                    </SelectedTemplate>
+                    <ResultTemplate Context="product">
+                        @product.Name (Id: @product.Id)
+                    </ResultTemplate>
+                </BlazoredTypeahead>
+                <ValidationMessage For="@(() => inventoryItem.ProductId)" />
+              </label>
+        </div>
+    </div>
+</div>
+</EditForm>
 
     @if (IsUpdate)
     {
@@ -82,7 +100,6 @@
         <button type="submit" class="btn btn-success" disabled=@IsTaskRunning @onclick="HandleValidSubmit">Add</button>
     }
 
-</EditForm>
 
 
 
