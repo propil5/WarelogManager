@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WarelogManager.Client.Resources.Common;
 
 namespace WarelogManager.Shared.Resources.Warehouse.InventoryItem
 {
@@ -23,5 +24,6 @@ namespace WarelogManager.Shared.Resources.Warehouse.InventoryItem
         [Required]
         public int? ProductId { get; set; }
         public string ProductName { get; set; }
+        public List<BaseImageResource> Images { get; set; }
     }
 }

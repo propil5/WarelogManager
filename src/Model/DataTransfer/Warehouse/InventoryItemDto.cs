@@ -23,5 +23,6 @@ namespace WarelogManager.Model.DataTransfer.Warehouse
         public int TotalQuantity { get; set; }
         public int? ProductId { get; set; }
         public ProductDto Product { get; set; }
+        public List<InventoryItemImageDto> Images { get; set; }
     }
 }

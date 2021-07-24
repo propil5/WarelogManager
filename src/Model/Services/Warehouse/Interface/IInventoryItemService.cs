@@ -7,7 +7,7 @@ namespace WarelogManager.Model.Services.Warehouse.Interface
 {
     public interface IInventoryItemService
     {
-        Task<DtoResponse> Add(InventoryItemDto inventoryItem);
+        Task<DtoResponse> Add(InventoryItemDto inventoryItem, List<InventoryItemImageDto> inventoryItemImages = null);
         Task<DtoResponse> Delete(int id);
         Task<IEnumerable<InventoryItemDto>> Get();
         Task<InventoryItemDto> Get(int id);

@@ -2,6 +2,7 @@
 @page "/inventory/items/edit/{Id:int}"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using WarelogManager.Client.Resources.Common
 @using WarelogManager.Shared.Resources.Warehouse.Product
 @using WarelogManager.Shared.Resources.Warehouse.InventoryItem
 @using WarelogManager.Shared.Enums
@@ -18,6 +19,20 @@
         <div class="col-md-8">
             <DataAnnotationsValidator/>
         <ValidationSummary />
+        <div class="row">
+            @foreach (var image in @inventoryItem.Images)
+            {
+                <img style="max-width: 100px; max-height: 100px; margin-left: 20px;" src="@image.Url">
+            }
+        </div>
+        <div class="form-group">
+            <p>
+                <label>
+                    Images:
+                    <InputFile id="Images" OnChange="@LoadImages" multiple />
+                </label>
+            </p>
+        </div>
          <div class="form-group">
             <p>
                 <label>
@@ -111,12 +126,18 @@
     private ProductResource[] products { get; set; }
     //private ProductResource product { get; set; }
     bool IsTaskRunning = false;
+    private long maxFileSize = 1024 * 15;
+    private int maxAllowedFiles = 10;
 
     protected override async Task OnInitializedAsync()
     {
         IsTaskRunning = true;
-        inventoryItem = new InventoryItemResource();
         IsUpdate = false;
+
+        inventoryItem = new InventoryItemResource
+        {
+            Images = new List<BaseImageResource>()
+        };
         await GetProductsAsync();
         if (Id != null)
         {
@@ -156,6 +177,33 @@
         {
             toastService.ShowError($"Could not update inventory item.");
         }
+        IsTaskRunning = false;
+    }
+
+    private async Task LoadImages(InputFileChangeEventArgs e)
+    {
+        IsTaskRunning = true;
+
+        foreach (var file in e.GetMultipleFiles(maxAllowedFiles))
+        {
+            try
+            {
+                var newImage = new BaseImageResource
+                {
+                    Data = new byte[file.Size]
+                };
+
+                await file.OpenReadStream().ReadAsync(newImage.Data);
+                newImage.Type = file.ContentType;
+                newImage.Url = $"data:{newImage.Type};base64,{Convert.ToBase64String(newImage.Data)}";
+                inventoryItem.Images.Add(newImage);
+            }
+            catch (Exception ex)
+            {
+                toastService.ShowError($"Could not read the file.");
+            }
+        }
+
         IsTaskRunning = false;
     }
 

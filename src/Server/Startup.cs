@@ -64,7 +64,8 @@ namespace WarelogManager.Server
                     .AddScoped<IPalletRepository, PalletRepository>()
                     .AddScoped<IPlantRepository, PlantRepository>()
                     .AddScoped<IProductRepository, ProductRepository>()
-                    .AddScoped<IInventoryItemRepository, InventoryItemRepository>();
+                    .AddScoped<IInventoryItemRepository, InventoryItemRepository>()
+                    .AddScoped<IInventoryItemImageRepository, InventoryItemImageRepository>();
 
 
             //Services

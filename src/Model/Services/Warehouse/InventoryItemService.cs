@@ -15,20 +15,31 @@ namespace WarelogManager.Model.Services.Warehouse
     public class InventoryItemService : IInventoryItemService
     {
         private readonly IInventoryItemRepository _inventoryItemRepository;
+        private readonly IInventoryItemImageRepository _inventoryItemImageRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public InventoryItemService(IInventoryItemRepository inventoryItemRepository, IUnitOfWork unitOfWork)
+        public InventoryItemService(IInventoryItemRepository inventoryItemRepository, IInventoryItemImageRepository inventoryItemImageRepository, IUnitOfWork unitOfWork)
         {
             _inventoryItemRepository = inventoryItemRepository;
+            _inventoryItemImageRepository = inventoryItemImageRepository;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<DtoResponse> Add(InventoryItemDto inventoryItem)
+        public async Task<DtoResponse> Add(InventoryItemDto inventoryItem, List<InventoryItemImageDto> inventoryItemImages = null)
         {
             try
             {
                 inventoryItem.AddedDate = DateTime.Now;
                 var id = await _inventoryItemRepository.Add(inventoryItem);
+                if(inventoryItemImages != null)
+                {
+                    foreach (var image in inventoryItemImages)
+                    {
+                        image.InventoryItemId = id ?? 0;
+                        await _inventoryItemImageRepository.Add(image);
+                    }
+                }
+
                 inventoryItem.Id = id ?? 0;
 
                 return new DtoResponse(inventoryItem);
@@ -42,6 +53,16 @@ namespace WarelogManager.Model.Services.Warehouse
         public async Task<IEnumerable<InventoryItemDto>> Get()
         {
             return await _inventoryItemRepository.Get();
+        }
+
+        public async Task<IEnumerable<InventoryItemDto>> GetItemsWithPhotos()
+        {
+            var inventoryItems = await _inventoryItemRepository.Get();
+            foreach(var inventoryItem in inventoryItems)
+            {
+                //inventoryItem.Images = _inventoryItemImageRepository.Get();
+            }
+            return inventoryItems;
         }
 
         public async Task<InventoryItemDto> Get(int id)

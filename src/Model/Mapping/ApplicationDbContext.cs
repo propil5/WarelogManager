@@ -14,6 +14,7 @@ using WarelogManager.Model.DataTransfer.Inbound;
 using WarelogManager.Model.DataTransfer.Monitoring;
 using WarelogManager.Model.DataTransfer.Payment;
 using WarelogManager.Model.DataTransfer.Sales;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WarelogManager.Model.Mapping
 {
@@ -70,6 +71,8 @@ namespace WarelogManager.Model.Mapping
         public virtual DbSet<PlantDto> Plants { get; set; }
         public virtual DbSet<RackDto> Racks { get; set; }
         public virtual DbSet<InventoryItemDto> InventoryItems { get; set; }
+        public virtual DbSet<FileDto> Files { get; set; }
+        public virtual DbSet<InventoryItemImageDto> InventoryItemImages { get; set; }
 
         internal ApplicationDbContext CreateDbContext(object i)
         {
