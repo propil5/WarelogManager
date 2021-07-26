@@ -32,6 +32,7 @@ namespace WarelogManager.Model.Mapping
             CreateMap<InventoryItemDto, BaseInventoryItemResource>();
             CreateMap<InventoryItemDto, InventoryItemResource>();
             CreateMap<BaseImageResource, InventoryItemImageDto>();
+            CreateMap<InventoryItemImageDto, BaseImageResource>();
         }
     }
 }

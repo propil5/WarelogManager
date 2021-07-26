@@ -39,8 +39,8 @@ namespace WarelogManager.Client.Controllers.Warehouse
             foreach (var item in inventories)
             {
                 var inventoryItemResource = _mapper.Map<InventoryItemDto, InventoryItemResource>(item);
-                inventoryItemResource.AddedByEmail = (await _userManager.FindByIdAsync(item.AddedById))?.Email;
-                inventoryItemResource.EdditedByEmail = (await _userManager.FindByIdAsync(item.AddedById))?.Email;
+                //inventoryItemResource.AddedByEmail = (await _userManager.FindByIdAsync(item.AddedById));
+                //inventoryItemResource.EdditedByEmail = (await _userManager.FindByIdAsync(item.AddedById))?.Email;
                 itemResources.Add(inventoryItemResource);
             }
 

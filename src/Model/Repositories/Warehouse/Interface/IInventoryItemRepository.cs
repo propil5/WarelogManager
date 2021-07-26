@@ -9,6 +9,7 @@ namespace WarelogManager.Model.Repositories.Warehouse.Interface
         Task<int?> Add(InventoryItemDto InventoryItem);
         void Delete(InventoryItemDto InventoryItem);
         Task<IEnumerable<InventoryItemDto>> Get();
+        Task<IEnumerable<InventoryItemDto>> GetWithPhotos();
         Task<InventoryItemDto> GetById(int id);
         void Update(InventoryItemDto InventoryItem);
     }

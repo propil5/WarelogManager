@@ -52,17 +52,12 @@ namespace WarelogManager.Model.Services.Warehouse
 
         public async Task<IEnumerable<InventoryItemDto>> Get()
         {
-            return await _inventoryItemRepository.Get();
+            return await _inventoryItemRepository.GetWithPhotos();
         }
 
         public async Task<IEnumerable<InventoryItemDto>> GetItemsWithPhotos()
         {
-            var inventoryItems = await _inventoryItemRepository.Get();
-            foreach(var inventoryItem in inventoryItems)
-            {
-                //inventoryItem.Images = _inventoryItemImageRepository.Get();
-            }
-            return inventoryItems;
+            return await _inventoryItemRepository.GetWithPhotos();
         }
 
         public async Task<InventoryItemDto> Get(int id)

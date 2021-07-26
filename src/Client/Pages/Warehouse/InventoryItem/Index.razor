@@ -23,13 +23,14 @@ else
         <thead>
             <tr>
                 <th>SKULabel</th>
+                <th>Photo</th>
                 <th>Product Id</th>
                 <th>Unit Of Measure</th>
                 <th>Descritption</th>
                 <th>Size Id</th>
                 <th>Added Date</th>
                 <th>Added By</th>
-                <th>AvailableQuantity</th>
+                <th>AvailableQuantity</th> 
                 <th>Total Quantity</th>
                 @if(DisplayEditColumn)
                 {
@@ -45,6 +46,14 @@ else
             {
                 <tr>
                     <td>@inventoryItem.SKULabel</td>
+                    <td>
+                            @foreach(var image in inventoryItem.Images)
+                            {
+                                <span>
+                                    <img style="max-width: 10px; max-height: 10px; margin-left: 20px;" src="@image.Url">
+                                </span>
+                            }
+                    </td>
                     <td>@inventoryItem.ProductId</td>
                     <td>@inventoryItem.UnitOfMeasure</td>
                     <td>@inventoryItem.Descritption</td>

@@ -28,6 +28,15 @@ namespace WarelogManager.Model.Repositories.Warehouse
             return await _context.InventoryItems.ToListAsync();
         }
 
+        public async Task<IEnumerable<InventoryItemDto>> GetWithPhotos()
+        {
+            return await _context.InventoryItems
+                .Include(m => m.Images)
+                .Include(m => m.AddedBy)
+                .Include(m => m.EditedBy)
+                .ToListAsync();
+        }
+
         public async Task<InventoryItemDto> GetById(int id)
         {
             return await _context.InventoryItems.FindAsync(id);

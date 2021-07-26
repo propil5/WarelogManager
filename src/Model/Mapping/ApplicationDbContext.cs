@@ -71,7 +71,7 @@ namespace WarelogManager.Model.Mapping
         public virtual DbSet<PlantDto> Plants { get; set; }
         public virtual DbSet<RackDto> Racks { get; set; }
         public virtual DbSet<InventoryItemDto> InventoryItems { get; set; }
-        public virtual DbSet<FileDto> Files { get; set; }
+        //public virtual DbSet<FileDto> Files { get; set; }
         public virtual DbSet<InventoryItemImageDto> InventoryItemImages { get; set; }
 
         internal ApplicationDbContext CreateDbContext(object i)
