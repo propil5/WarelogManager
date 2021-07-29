@@ -53,8 +53,8 @@ namespace WarelogManager.Client.Controllers.Warehouse
         {
             var inventory = await _inventoryService.Get(id);
             var inventoryResource = _mapper.Map<InventoryItemDto, InventoryItemResource>(inventory);
-            inventoryResource.AddedByEmail = (await _userManager.FindByIdAsync(inventory.AddedById))?.Email;
-            inventoryResource.EdditedByEmail = (await _userManager.FindByIdAsync(inventory.EditedById))?.Email;
+            //inventoryResource.AddedBy.Email = (await _userManager.FindByIdAsync(inventory.AddedById))?.Email;
+            //inventoryResource.EdditedByEmail = (await _userManager.FindByIdAsync(inventory.EditedById))?.Email;
             return inventoryResource;
         }
 

@@ -27,7 +27,13 @@ namespace WarelogManager.Model.Repositories.Warehouse
 
         public async Task<IEnumerable<ProductDto>> Get()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products
+                .Include(m => m.AddedBy)
+                .Include(m => m.EditedBy)
+                .Include(m => m.Pallet)
+                .Include(m => m.InventoryItems)
+                .ThenInclude(m => m.Images)
+                .ToListAsync();
         }
 
         public async Task<ProductDto> GetById(int id)

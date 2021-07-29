@@ -23,6 +23,6 @@ namespace WarelogManager.Model.DataTransfer.Warehouse
         public double Depth { get; set; }
         public int? PalletId { get; set; }
         public PalletDto Pallet { get; set; }
-
+        public List<InventoryItemDto> InventoryItems { get; set; }
     }
 }

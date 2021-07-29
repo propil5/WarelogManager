@@ -8,6 +8,7 @@ namespace WarelogManager.Client.Resources.Common
 {
     public class BaseImageResource : BaseFileResource
     {
-        public string Url { get; set; }
+        public string Src { get; set; }
+        public string Alt { get; set; }
     }
 }

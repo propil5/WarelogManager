@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WarelogManager.Shared.Resources.Warehouse.InventoryItem;
 
 namespace WarelogManager.Shared.Resources.Warehouse.Product
 {
@@ -25,5 +26,6 @@ namespace WarelogManager.Shared.Resources.Warehouse.Product
         [Range(0, 99999)]
         public double Depth { get; set; }
         public int PalletId { get; set; }
+        public List<InventoryItemResource> InventoryItems { get; set; }
     }
 }

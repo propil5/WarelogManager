@@ -37,14 +37,7 @@ namespace WarelogManager.Client.Controllers.Warehouse
         public async Task<IEnumerable<ProductResource>> Get()
         {
             var products = await _productService.Get();
-            var productResources = new List<ProductResource>();
-            foreach (var product in products)
-            {
-                var productResource = _mapper.Map<ProductDto, ProductResource>(product);
-                productResource.AddedByEmail = (await _userManager.FindByIdAsync(product.AddedById))?.Email;
-                productResource.EdditedByEmail = (await _userManager.FindByIdAsync(product.AddedById))?.Email;
-                productResources.Add(productResource);
-            }
+            var productResources = _mapper.Map<List<ProductDto>, List<ProductResource>>(products.ToList());
 
             return productResources;
         }

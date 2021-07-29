@@ -38,7 +38,6 @@ else
                     <th>Edited Date</th>
                 }
                 <th>Action</th>
-
             </tr>
         </thead>
         <tbody>
@@ -47,10 +46,10 @@ else
                 <tr>
                     <td>@inventoryItem.SKULabel</td>
                     <td>
-                            @foreach(var image in inventoryItem.Images)
+                            @foreach (var image in inventoryItem.Images.Take(2))
                             {
                                 <span>
-                                    <img style="max-width: 10px; max-height: 10px; margin-left: 20px;" src="@image.Url">
+                                    <img style="max-width: 50px; max-height: 50px; margin-top: 2px;" src="data:@image.Type;base64,@Convert.ToBase64String(image.Data)">
                                 </span>
                             }
                     </td>
@@ -59,7 +58,7 @@ else
                     <td>@inventoryItem.Descritption</td>
                     <td>@inventoryItem.SizeId</td>
                     <td>@inventoryItem.AddedDate</td>
-                    <td>@inventoryItem.AddedByEmail</td>
+                    <td>@inventoryItem.AddedBy.Email</td>
                     <td>@inventoryItem.AvailableQuantity</td>
                     <td>@inventoryItem.TotalQuantity</td>
 
@@ -95,6 +94,7 @@ else
     private async Task GetItemsAsync()
     {
         inventoryItems = await Http.GetFromJsonAsync<InventoryItemResource[]>("api/inventory/item");
+        var s = "";
     }
 
     private void RedirectToItemEdit(int? id = null)
