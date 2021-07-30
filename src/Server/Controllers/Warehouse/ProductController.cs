@@ -48,8 +48,6 @@ namespace WarelogManager.Client.Controllers.Warehouse
         {
             var product = await _productService.Get(id);
             var productResource = _mapper.Map<ProductDto, ProductResource>(product);
-            productResource.AddedByEmail = (await _userManager.FindByIdAsync(product.AddedById))?.Email;
-            productResource.EdditedByEmail = (await _userManager.FindByIdAsync(product.EditedById))?.Email;
             return productResource;
         }
 

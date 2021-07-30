@@ -38,7 +38,8 @@ namespace WarelogManager.Model.Repositories.Warehouse
 
         public async Task<ProductDto> GetById(int id)
         {
-            return await _context.Products.FindAsync(id);
+            return await _context.Products
+                .FindAsync(id);
         }
 
         public void Update(ProductDto product)
