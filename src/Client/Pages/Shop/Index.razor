@@ -30,22 +30,25 @@ else
             var cardInventoryItem = product.InventoryItems.First();
             var image = GetItemImage(cardInventoryItem);
 
-            <div class="col-sm-6">
-                <img @bind-src="image.Src" @bind-src:event="onchange" class="card-img" alt="@image.Alt">
-                <div class="card">
+            <div>
+                <div class="card" style="width: 18rem;">
+                    <img @bind-src="image.Src" @bind-src:event="onchange" class="card-img-top" alt="@image.Alt">
                     <div class="card-img-overlay">
                         <h5 class="card-title">@product.Name</h5>
                     </div>
-                    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-                        @foreach (var item in product.InventoryItems)
-                        {
-                            var itemImage = GetItemImage(item);
+                    <div class="card-body">
+                        <div id="productCarousel" class="carousel slide" data-ride="carousel">
                             <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="@itemImage.Src" class="d-block w-100" style="max-width:60px; max-height: 60px;"  alt="@itemImage.Alt" @onclick="@(e => cardInventoryItem = item)">
-                                </div>
+                                @foreach (var item in product.InventoryItems)
+                                {
+                                    var itemImage = GetItemImage(item);
+                                        <div class="carousel-item active">
+                                            <img src="@itemImage.Src" class="d-block w-100" style="max-width:60px; max-height: 60px;" 
+                                            alt="@itemImage.Alt" @onclick="@(e => cardInventoryItem = item)">
+                                        </div>
+                                }
                             </div>
-                        }
+                        </div>
                     </div>
                 </div>
             </div>

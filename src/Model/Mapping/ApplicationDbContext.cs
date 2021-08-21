@@ -15,11 +15,14 @@ using WarelogManager.Model.DataTransfer.Monitoring;
 using WarelogManager.Model.DataTransfer.Payment;
 using WarelogManager.Model.DataTransfer.Sales;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.Data.SqlClient;
+using System;
 
 namespace WarelogManager.Model.Mapping
 {
     public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
     {
+        
         public ApplicationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
@@ -81,15 +84,24 @@ namespace WarelogManager.Model.Mapping
 
         public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
         {
+            public IConfiguration Configuration { get; }
+            public DesignTimeDbContextFactory(IConfiguration configuration)
+            {
+                Configuration = configuration;
+            }
             public ApplicationDbContext CreateDbContext(string[] args)
             {
-                IConfigurationRoot configuration = new ConfigurationBuilder()
-                    .SetBasePath(Directory.GetCurrentDirectory())
-                    .AddJsonFile(@Directory.GetCurrentDirectory() + "/../../src/Server/appsettings.json")
-                    .Build();
+                //IConfigurationRoot configuration = new ConfigurationBuilder()
+                //    .SetBasePath(Directory.GetCurrentDirectory())
+                //    .AddJsonFile(@Directory.GetCurrentDirectory() + "/../../src/Server/appsettings.json")
+                //    .Build();
                 var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
-                var connectionString = configuration.GetConnectionString("DefaultConnection");
-                builder.UseSqlServer(connectionString);
+                var connectionStringBuilder = new SqlConnectionStringBuilder(
+                    Configuration.GetConnectionString("DefaultDbConnection"));
+                connectionStringBuilder.Password = Configuration["DefaultDbConnection:Password"];
+
+                Console.WriteLine(connectionStringBuilder.Password + " Connectio nstring: " + connectionStringBuilder.ConnectionString);
+                builder.UseSqlServer(connectionStringBuilder.ConnectionString);
                 return new ApplicationDbContext(builder.Options, new OperationalStoreOptionsMigrations());
             }
         }
