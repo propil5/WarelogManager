@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using WarelogManager.Client.Resources.Common
+@using WarelogManager.Client.Resources.Sales
 @using WarelogManager.Shared.Resources.Warehouse.InventoryItem
 @using WarelogManager.Shared.Resources.Warehouse.Product
 @attribute [Authorize]
@@ -22,15 +23,18 @@ else
     <MudGrid>
         @foreach(var product in products)
         {
-            <MudCard >
-                <img />
-                <MudCardContent>
-                    <MudText>@product.Name</MudText>
-                </MudCardContent>
-                <MudCardActions>
-                    <MudButton Variant="Variant.Text" Color="Color.Primary">Add to basket</MudButton>
-                </MudCardActions>
-            </MudCard>
+            var image = GetItemImage(product.InventoryItems);
+            <MudItem xs="3">
+                <MudCard xs="3">
+                    <MudCardMedia Image="@(image.Src)" Height="200" />
+                    <MudCardContent>
+                        <MudText>@product.Name</MudText>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Text" Color="Color.Success" @onclick="() => AddToBasket(product.InventoryItems.First())">Add to basket</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
         }
     </MudGrid>
 
@@ -76,22 +80,25 @@ else
         products = await Http.GetFromJsonAsync<ProductResource[]>("api/product/");
     }
 
-    private IEnumerable<BaseImageResource> GetItemImages(BaseInventoryItemResource inventoryItem)
+    private BaseImageResource GetItemImage(List<InventoryItemResource> inventoryItems)
     {
         var images = new List<BaseImageResource>();
-        if (inventoryItem.Images == null || inventoryItem.Images.Count == 0)
+        if (inventoryItems == null || inventoryItems.Count == 0 || inventoryItems.First().Images == null || inventoryItems.First().Images.Count == 0)
         {
-            yield return new BaseImageResource
+            return new BaseImageResource
             {
                 Src = @"/images/question_mark.png",
-                Alt = inventoryItem.ProductName ?? "n/a"
+                Alt = "n/a"
             };
         }
         else
         {
-            foreach(var image in inventoryItem.Images)
+
+            return GetBaseImageResource(inventoryItems.First().Images.First());
+
+            foreach(var image in inventoryItems.First().Images)
             {
-                yield return GetBaseImageResource(image);
+                return GetBaseImageResource(image);
             }
         }
     }
@@ -101,5 +108,26 @@ else
         imageResource.Src = $"data:{imageResource.Type};base64,{Convert.ToBase64String(imageResource.Data)}";
         imageResource.Alt = imageResource.Alt ?? "n/a";
         return imageResource;
+    }
+    private async void AddToBasket(InventoryItemResource inventoryItem)
+    {
+        IsTaskRunning = true;
+        var basketItem = new BasketItemResource
+        {
+            InventoryItemId = inventoryItem.Id,
+            Quantity = 1
+        };
+
+        
+        var result = await Http.PostAsJsonAsync("api/basket/item", basketItem);
+        if (result.IsSuccessStatusCode)
+        {
+            toastService.ShowSuccess($"Succesfully added product to the basket.");
+        }
+        else
+        {
+            toastService.ShowError($"Could not add product.");
+        }
+        IsTaskRunning = false;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -9,16 +10,15 @@ using WarelogManager.Model.DataTransfer.Warehouse;
 
 namespace WarelogManager.Model.DataTransfer.Sales
 {
-    [Table("SalesOrderLine")]
-    public class SalesOrderLineDto : BaseEntity
+    [Table("BasketItem")]
+    [Keyless]
+    public class BasketItemDto
     {
-        public int? SalesOrderId { get; set; }
-        public SalesOrderDto SalesOrder { get; set; }
+        public string ApplicationUserId { get; set; }
+        public ApplicationUser ApplicationUser {get; set; }
+        public DateTime AddedAt { get; set; }
         public int Quantity { get; set; }
-        public int? Discount { get; set; }
-        public double TotalPrice { get; set; }
-        public double SalesTax { get; set; }
-        public int? InventoryItemId { get; set; }
+        public int InventoryItemId { get; set; }
         public InventoryItemDto InventoryItem { get; set; }
     }
 }

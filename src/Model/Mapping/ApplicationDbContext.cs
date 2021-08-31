@@ -60,6 +60,7 @@ namespace WarelogManager.Model.Mapping
         public virtual DbSet<SalesOrderLineDto> SalesOrderLines { get; set; }
         public virtual DbSet<SalesOrderShippingDto> SalesOrderShippings { get; set; }
         public virtual DbSet<SalesOrderStatusDto> SalesOrderStatuses { get; set; }
+        public virtual DbSet<BasketItemDto> BasketItems { get; set; }
 
         //Utilities
         public virtual DbSet<AddressDto> Addresses { get; set; }
@@ -84,23 +85,22 @@ namespace WarelogManager.Model.Mapping
 
         public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
         {
-            public IConfiguration Configuration { get; }
-            public DesignTimeDbContextFactory(IConfiguration configuration)
-            {
-                Configuration = configuration;
-            }
+            //public IConfiguration Configuration { get; }
+            //public DesignTimeDbContextFactory(IConfiguration configuration)
+            //{
+            //    Configuration = configuration;
+            //}
             public ApplicationDbContext CreateDbContext(string[] args)
             {
-                //IConfigurationRoot configuration = new ConfigurationBuilder()
-                //    .SetBasePath(Directory.GetCurrentDirectory())
-                //    .AddJsonFile(@Directory.GetCurrentDirectory() + "/../../src/Server/appsettings.json")
-                //    .Build();
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile(@Directory.GetCurrentDirectory() + "/../../src/Server/appsettings.json")
+                    .Build();
                 var builder = new DbContextOptionsBuilder<ApplicationDbContext>();
                 var connectionStringBuilder = new SqlConnectionStringBuilder(
-                    Configuration.GetConnectionString("DefaultDbConnection"));
-                connectionStringBuilder.Password = Configuration["DefaultDbConnection:Password"];
+                    configuration.GetConnectionString("DefaultConnection"));
+                //connectionStringBuilder.Password = Configuration["DefaultDbConnection:Password"];
 
-                Console.WriteLine(connectionStringBuilder.Password + " Connectio nstring: " + connectionStringBuilder.ConnectionString);
                 builder.UseSqlServer(connectionStringBuilder.ConnectionString);
                 return new ApplicationDbContext(builder.Options, new OperationalStoreOptionsMigrations());
             }

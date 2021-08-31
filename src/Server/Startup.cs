@@ -17,6 +17,10 @@ using WarelogManager.Model.Services.Warehouse.Interface;
 using WarelogManager.Model.Services.Warehouse;
 using WarelogManager.Model.Repositories.UnitOfWork;
 using AutoMapper;
+using WarelogManager.Model.Repositories.Sales;
+using WarelogManager.Model.Repositories.Sales.Interface;
+using WarelogManager.Model.Services.Sales.Interface;
+using WarelogManager.Model.Services.Sales;
 
 namespace WarelogManager.Server
 {
@@ -65,13 +69,15 @@ namespace WarelogManager.Server
                     .AddScoped<IPlantRepository, PlantRepository>()
                     .AddScoped<IProductRepository, ProductRepository>()
                     .AddScoped<IInventoryItemRepository, InventoryItemRepository>()
-                    .AddScoped<IInventoryItemImageRepository, InventoryItemImageRepository>();
+                    .AddScoped<IInventoryItemImageRepository, InventoryItemImageRepository>()
+                    .AddScoped<IBasketItemRepository, BasketItemRepository>();
 
 
             //Services
             services.AddScoped<ICompanyService, CompanyService>()
                     .AddScoped<IProductService, ProductService>()
-                    .AddScoped<IInventoryItemService, InventoryItemService>();
+                    .AddScoped<IInventoryItemService, InventoryItemService>()
+                    .AddScoped<IBasketItemService, BasketItemService>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

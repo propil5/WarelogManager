@@ -5,9 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Client.Resources.Common;
+using WarelogManager.Client.Resources.Sales;
 using WarelogManager.Client.Resources.Warehouse.Identity;
 using WarelogManager.Model.Common.Response;
 using WarelogManager.Model.DataTransfer.Common;
+using WarelogManager.Model.DataTransfer.Sales;
 using WarelogManager.Model.DataTransfer.Warehouse;
 using WarelogManager.Shared.Resources.Warehouse.Company;
 using WarelogManager.Shared.Resources.Warehouse.InventoryItem;
@@ -35,6 +37,10 @@ namespace WarelogManager.Model.Mapping
             CreateMap<BaseImageResource, InventoryItemImageDto>();
             CreateMap<InventoryItemImageDto, BaseImageResource>();
             CreateMap<ApplicationUser, UserResource>();
+
+            //Sales
+            CreateMap<BasketItemDto, BasketItemResource>();
+            CreateMap<BasketItemResource, BasketItemDto>();
             //CreateMap<InventoryItemImageDto, BaseImageResource>();
         }
     }

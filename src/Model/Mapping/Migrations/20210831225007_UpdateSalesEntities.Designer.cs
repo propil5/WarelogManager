@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WarelogManager.Model.Mapping;
 
-namespace WarelogManager.Model.Repositories
+namespace WarelogManager.Model.Mapping.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210831225007_UpdateSalesEntities")]
+    partial class UpdateSalesEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -697,10 +699,10 @@ namespace WarelogManager.Model.Repositories
 
             modelBuilder.Entity("WarelogManager.Model.DataTransfer.Sales.BasketItemDto", b =>
                 {
-                    b.Property<DateTime>("AddedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("ApplicationUserId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ApplicationUserId")
+                    b.Property<string>("ApplicationUserId1")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("InventoryItemId")
@@ -709,7 +711,7 @@ namespace WarelogManager.Model.Repositories
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("ApplicationUserId1");
 
                     b.HasIndex("InventoryItemId");
 
@@ -1386,7 +1388,7 @@ namespace WarelogManager.Model.Repositories
                 {
                     b.HasOne("WarelogManager.Model.DataTransfer.Common.ApplicationUser", "ApplicationUser")
                         .WithMany()
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("ApplicationUserId1");
 
                     b.HasOne("WarelogManager.Model.DataTransfer.Warehouse.InventoryItemDto", "InventoryItem")
                         .WithMany()
