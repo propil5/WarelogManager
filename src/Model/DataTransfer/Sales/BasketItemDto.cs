@@ -11,8 +11,7 @@ using WarelogManager.Model.DataTransfer.Warehouse;
 namespace WarelogManager.Model.DataTransfer.Sales
 {
     [Table("BasketItem")]
-    [Keyless]
-    public class BasketItemDto
+    public class BasketItemDto : BaseEntity
     {
         public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser {get; set; }

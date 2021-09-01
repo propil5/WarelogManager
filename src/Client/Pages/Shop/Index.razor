@@ -31,7 +31,8 @@ else
                         <MudText>@product.Name</MudText>
                     </MudCardContent>
                     <MudCardActions>
-                        <MudButton Variant="Variant.Text" Color="Color.Success" @onclick="() => AddToBasket(product.InventoryItems.First())">Add to basket</MudButton>
+                            <MudButton Disabled="@(!product.InventoryItems.Any())"Variant="Variant.Text" Color="Color.Success" 
+                                @onclick="() => AddToBasket(product.InventoryItems.First())">Add to basket</MudButton>
                     </MudCardActions>
                 </MudCard>
             </MudItem>

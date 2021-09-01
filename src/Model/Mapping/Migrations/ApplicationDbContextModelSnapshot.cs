@@ -697,6 +697,11 @@ namespace WarelogManager.Model.Repositories
 
             modelBuilder.Entity("WarelogManager.Model.DataTransfer.Sales.BasketItemDto", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<DateTime>("AddedAt")
                         .HasColumnType("datetime2");
 
@@ -708,6 +713,8 @@ namespace WarelogManager.Model.Repositories
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WarelogManager.Model.Mapping.Migrations
 {
@@ -22,16 +23,19 @@ namespace WarelogManager.Model.Mapping.Migrations
                 name: "BasketItem",
                 columns: table => new
                 {
-                    ApplicationUserId = table.Column<int>(type: "int", nullable: false),
-                    ApplicationUserId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    AddedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Quantity = table.Column<int>(type: "int", nullable: false),
                     InventoryItemId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_BasketItem", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BasketItem_AspNetUsers_ApplicationUserId1",
-                        column: x => x.ApplicationUserId1,
+                        name: "FK_BasketItem_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -44,9 +48,9 @@ namespace WarelogManager.Model.Mapping.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BasketItem_ApplicationUserId1",
+                name: "IX_BasketItem_ApplicationUserId",
                 table: "BasketItem",
-                column: "ApplicationUserId1");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BasketItem_InventoryItemId",

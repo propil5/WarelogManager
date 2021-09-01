@@ -10,8 +10,8 @@ using WarelogManager.Model.Mapping;
 namespace WarelogManager.Model.Mapping.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210831230650_UpdateBasketItem")]
-    partial class UpdateBasketItem
+    [Migration("20210901224429_UpdateSalesEntities")]
+    partial class UpdateSalesEntities
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -699,6 +699,11 @@ namespace WarelogManager.Model.Mapping.Migrations
 
             modelBuilder.Entity("WarelogManager.Model.DataTransfer.Sales.BasketItemDto", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<DateTime>("AddedAt")
                         .HasColumnType("datetime2");
 
@@ -710,6 +715,8 @@ namespace WarelogManager.Model.Mapping.Migrations
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
 

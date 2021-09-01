@@ -16,11 +16,17 @@ namespace WarelogManager.Model.Repositories.Sales
         {
         }
 
-        public async Task<bool> Add(BasketItemDto salesOrderLine)
+        public async Task<bool> Add(BasketItemDto basketItem)
         {
-            await _context.BasketItems.AddAsync(salesOrderLine);
-            await _context.SaveChangesAsync();
-            return true;
+            try
+            {
+                await _context.BasketItems.AddAsync(basketItem);
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
         }
 
         public async Task<IEnumerable<BasketItemDto>> Get()
@@ -33,14 +39,14 @@ namespace WarelogManager.Model.Repositories.Sales
             return await _context.BasketItems.FindAsync(id);
         }
 
-        public void Update(BasketItemDto salesOrderLine)
+        public void Update(BasketItemDto basketItemDto)
         {
-            _context.BasketItems.Update(salesOrderLine);
+            _context.BasketItems.Update(basketItemDto);
         }
 
-        public void Delete(BasketItemDto salesOrderLine)
+        public void Delete(BasketItemDto basketItemDto)
         {
-            _context.BasketItems.Remove(salesOrderLine);
+            _context.BasketItems.Remove(basketItemDto);
         }
     }
 }

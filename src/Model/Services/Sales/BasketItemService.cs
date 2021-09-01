@@ -28,6 +28,7 @@ namespace WarelogManager.Model.Services.Sales
             {
                 if (await _basketItemRepository.Add(basketItem))
                 {
+                    await _unitOfWork.CompleteAsync();
                     return new DtoResponse(basketItem);
                 }
                 else
