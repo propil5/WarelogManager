@@ -28,7 +28,7 @@ namespace WarelogManager.Client.Controllers.Sales
             _mapper = mapper;
         }
 
-        // GET api/basketItem
+        // GET api/basket/tem
         [HttpGet]
         public async Task<IEnumerable<BasketItemResource>> Get()
         {
@@ -37,7 +37,7 @@ namespace WarelogManager.Client.Controllers.Sales
             return resource;
         }
 
-        // GET api/basketItem/5
+        // GET api/basket/tem/5
         [HttpGet("{id:int}")]
         public async Task<BasketItemResource> GetById(int id)
         {
@@ -68,7 +68,7 @@ namespace WarelogManager.Client.Controllers.Sales
             return Ok(basketItemResorce);
         }
 
-        // PUT api/basketItem
+        // PUT api/basket/tem
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] BasketItemResource basketItem)
         {
