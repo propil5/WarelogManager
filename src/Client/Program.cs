@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,8 @@ namespace WarelogManager.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddHttpClient("WarelogManager.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+            var baseApiAddress = GetBaseApiAddress(builder);
+            builder.Services.AddHttpClient("WarelogManager.ServerAPI", client => client.BaseAddress = new Uri("https://warelogserver-staging.azurewebsites.net/"))
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
             // Supply HttpClient instances that include access tokens when making requests to the server project
@@ -31,6 +33,11 @@ namespace WarelogManager.Client
             builder.Services.AddBlazoredToast();
 
             await builder.Build().RunAsync();
+        }
+
+        private static string GetBaseApiAddress(WebAssemblyHostBuilder builder)
+        {
+            return builder.Configuration[$"baseWarelogApiUrl:{builder.HostEnvironment.Environment.ToLower()}"];
         }
     }
 }
