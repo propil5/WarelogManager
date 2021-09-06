@@ -22,7 +22,7 @@ namespace WarelogManager.Client
             builder.RootComponents.Add<App>("#app");
 
             var baseApiAddress = GetBaseApiAddress(builder);
-            builder.Services.AddHttpClient("WarelogManager.ServerAPI", client => client.BaseAddress = new Uri("https://warelogserver-staging.azurewebsites.net/"))
+            builder.Services.AddHttpClient("WarelogManager.ServerAPI", client => client.BaseAddress = new Uri(baseApiAddress))
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
             // Supply HttpClient instances that include access tokens when making requests to the server project
