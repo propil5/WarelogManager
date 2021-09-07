@@ -19,10 +19,10 @@ namespace WarelogManager.Client.Controllers.Sales
     [ApiController]
     public class PurchaseOrderController : ControllerBase
     {
-        private readonly IBasketItemService _basketItemService;
+        private readonly IPurchaseOrderService _basketItemService;
         private readonly IMapper _mapper;
 
-        public PurchaseOrderController(IBasketItemService basketItemService, IMapper mapper)
+        public PurchaseOrderController(IPurchaseOrderService basketItemService, IMapper mapper)
         {
             _basketItemService = basketItemService;
             _mapper = mapper;
@@ -30,31 +30,31 @@ namespace WarelogManager.Client.Controllers.Sales
 
         // GET api/basket/tem
         [HttpGet]
-        public async Task<IEnumerable<BasketItemResource>> Get()
+        public async Task<IEnumerable<PurchaseOrderResource>> Get()
         {
             var queryResult = await _basketItemService.Get();
-            var resource = _mapper.Map<IEnumerable<BasketItemDto>, IEnumerable<BasketItemResource>>(queryResult);
+            var resource = _mapper.Map<IEnumerable<PurchaseOrderDto>, IEnumerable<PurchaseOrderResource>>(queryResult);
             return resource;
         }
 
         // GET api/basket/tem/5
         [HttpGet("{id:int}")]
-        public async Task<BasketItemResource> GetById(int id)
+        public async Task<PurchaseOrderResource> GetById(int id)
         {
             var queryResult = await _basketItemService.Get(id);
-            return _mapper.Map<BasketItemDto, BasketItemResource>(queryResult);
+            return _mapper.Map<PurchaseOrderDto, PurchaseOrderResource>(queryResult);
         }
 
         // POST api/basket/item
         [HttpPost]
-        public async Task<IActionResult> Add(BasketItemResource basketItem)
+        public async Task<IActionResult> Add(PurchaseOrderResource basketItem)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorMessages());
             }
 
-            var basketItemDto = _mapper.Map<BasketItemResource, BasketItemDto>(basketItem);
+            var basketItemDto = _mapper.Map<PurchaseOrderResource, PurchaseOrderDto>(basketItem);
             basketItemDto.ApplicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             basketItemDto.AddedAt = DateTime.UtcNow;
             var result = await _basketItemService.Add(basketItemDto);
@@ -64,18 +64,18 @@ namespace WarelogManager.Client.Controllers.Sales
                 return BadRequest(result.Message);
             }
 
-            var basketItemResorce = _mapper.Map<BasketItemDto, BasketItemResource>(result.Dto as BasketItemDto);
+            var basketItemResorce = _mapper.Map<PurchaseOrderDto, PurchaseOrderResource>(result.Dto as PurchaseOrderDto);
             return Ok(basketItemResorce);
         }
 
         // PUT api/basket/tem
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] BasketItemResource basketItem)
+        public async Task<IActionResult> Update(int id, [FromBody] PurchaseOrderResource basketItem)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
-            var basketItemDto = _mapper.Map<BasketItemResource, BasketItemDto>(basketItem);
+            var basketItemDto = _mapper.Map<PurchaseOrderResource, PurchaseOrderDto>(basketItem);
             var result = await _basketItemService.Update(id, basketItemDto);
 
             if (!result.Success)
@@ -83,7 +83,7 @@ namespace WarelogManager.Client.Controllers.Sales
                 return BadRequest(result.Message);
             }
 
-            var basketItemResource = _mapper.Map<BasketItemDto, BasketItemResource>(result.Dto as BasketItemDto);
+            var basketItemResource = _mapper.Map<PurchaseOrderDto, PurchaseOrderResource>(result.Dto as PurchaseOrderDto);
             return Ok(basketItemResource);
         }
 
@@ -98,7 +98,7 @@ namespace WarelogManager.Client.Controllers.Sales
                 return BadRequest(result.Message);
             }
 
-            var basketItemResource = _mapper.Map<BasketItemDto, BasketItemResource>(result.Dto as BasketItemDto);
+            var basketItemResource = _mapper.Map<PurchaseOrderDto, PurchaseOrderResource>(result.Dto as PurchaseOrderDto);
             return Ok(basketItemResource);
         }
     }

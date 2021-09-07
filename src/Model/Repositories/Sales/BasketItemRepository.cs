@@ -23,7 +23,7 @@ namespace WarelogManager.Model.Repositories.Sales
                 await _context.BasketItems.AddAsync(basketItem);
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception)
             {
                 return false;
             }

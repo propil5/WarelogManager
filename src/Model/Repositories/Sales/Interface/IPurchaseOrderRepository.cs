@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WarelogManager.Model.Repositories.Sales.Interface
 {
-    class IPurchaseOrderRepository
+    public interface IPurchaseOrderRepository
     {
     }
 }
