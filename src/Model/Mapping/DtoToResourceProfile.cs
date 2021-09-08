@@ -41,6 +41,8 @@ namespace WarelogManager.Model.Mapping
             //Sales
             CreateMap<BasketItemDto, BasketItemResource>();
             CreateMap<BasketItemResource, BasketItemDto>();
+            CreateMap<PurchaseOrderDto, PurchaseOrderResource>();
+            CreateMap<PurchaseOrderResource, PurchaseOrderDto>();
             //CreateMap<InventoryItemImageDto, BaseImageResource>();
         }
     }

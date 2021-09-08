@@ -61,6 +61,7 @@ namespace WarelogManager.Model.Mapping
         public virtual DbSet<SalesOrderShippingDto> SalesOrderShippings { get; set; }
         public virtual DbSet<SalesOrderStatusDto> SalesOrderStatuses { get; set; }
         public virtual DbSet<BasketItemDto> BasketItems { get; set; }
+        public virtual DbSet<PurchaseOrderDto> PurchaseOrders { get; set; }
 
         //Utilities
         public virtual DbSet<AddressDto> Addresses { get; set; }

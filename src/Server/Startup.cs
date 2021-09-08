@@ -70,14 +70,16 @@ namespace WarelogManager.Server
                     .AddScoped<IProductRepository, ProductRepository>()
                     .AddScoped<IInventoryItemRepository, InventoryItemRepository>()
                     .AddScoped<IInventoryItemImageRepository, InventoryItemImageRepository>()
-                    .AddScoped<IBasketItemRepository, BasketItemRepository>();
+                    .AddScoped<IBasketItemRepository, BasketItemRepository>()
+                    .AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
 
 
             //Services
             services.AddScoped<ICompanyService, CompanyService>()
                     .AddScoped<IProductService, ProductService>()
                     .AddScoped<IInventoryItemService, InventoryItemService>()
-                    .AddScoped<IBasketItemService, BasketItemService>();
+                    .AddScoped<IBasketItemService, BasketItemService>()
+                    .AddScoped<IPurchaseOrderService, PurchaseOrderService>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();

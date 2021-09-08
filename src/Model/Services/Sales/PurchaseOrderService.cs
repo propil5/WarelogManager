@@ -11,25 +11,25 @@ using WarelogManager.Model.Services.Sales.Interface;
 
 namespace WarelogManager.Model.Services.Sales
 {
-    public class BasketItemService : IBasketItemService
+    public class PurchaseOrderService : IPurchaseOrderService
     {
-        private readonly IBasketItemRepository _basketItemRepository;
+        private readonly IPurchaseOrderRepository _purchaseOrderRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public BasketItemService(IBasketItemRepository basketItemRepository, IUnitOfWork unitOfWork)
+        public PurchaseOrderService(IPurchaseOrderRepository purchaseOrderRepository, IUnitOfWork unitOfWork)
         {
-            _basketItemRepository = basketItemRepository;
+            _purchaseOrderRepository = purchaseOrderRepository;
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<DtoResponse> Add(BasketItemDto basketItem)
+        public async Task<DtoResponse> Add(PurchaseOrderDto purchaseOrder)
         {
             try
             {
-                if (await _basketItemRepository.Add(basketItem))
+                if (await _purchaseOrderRepository.Add(purchaseOrder))
                 {
                     await _unitOfWork.CompleteAsync();
-                    return new DtoResponse(basketItem);
+                    return new DtoResponse(purchaseOrder);
                 }
                 else
                 {
@@ -42,56 +42,56 @@ namespace WarelogManager.Model.Services.Sales
             }
         }
 
-        public async Task<IEnumerable<BasketItemDto>> Get()
+        public async Task<IEnumerable<PurchaseOrderDto>> Get()
         {
-            return await _basketItemRepository.Get();
+            return await _purchaseOrderRepository.Get();
         }
 
-        public async Task<BasketItemDto> Get(int id)
+        public async Task<PurchaseOrderDto> Get(int id)
         {
-            return await _basketItemRepository.GetById(id);
+            return await _purchaseOrderRepository.GetById(id);
         }
 
-        public async Task<DtoResponse> Update(int id, BasketItemDto basketItem)
+        public async Task<DtoResponse> Update(int id, PurchaseOrderDto purchaseOrder)
         {
-            var existingBasketItem = await _basketItemRepository.GetById(id);
+            var existingPurchaseOrder = await _purchaseOrderRepository.GetById(id);
 
-            if (existingBasketItem == null)
+            if (existingPurchaseOrder == null)
             {
-                return new DtoResponse($"Could not find basketItem to update with id:{id}.");
+                return new DtoResponse($"Could not find purchaseOrder to update with id:{id}.");
             }
             try
             {
-                _basketItemRepository.Update(basketItem);
+                _purchaseOrderRepository.Update(purchaseOrder);
                 await _unitOfWork.CompleteAsync();
 
-                return new DtoResponse(basketItem);
+                return new DtoResponse(purchaseOrder);
             }
             catch (Exception ex)
             {
-                return new DtoResponse($"An error occurred when saving the basketItem: {ex.Message}");
+                return new DtoResponse($"An error occurred when saving the purchaseOrder: {ex.Message}");
             }
         }
 
         public async Task<DtoResponse> DeleteAsync(int id)
         {
-            var existingBasketItem = await _basketItemRepository.GetById(id);
+            var existingPurchaseOrder = await _purchaseOrderRepository.GetById(id);
 
-            if (existingBasketItem == null)
+            if (existingPurchaseOrder == null)
             {
-                return new DtoResponse($"Could not find basketItem to update with id: {id}.");
+                return new DtoResponse($"Could not find purchaseOrder to update with id: {id}.");
             }
 
             try
             {
-                _basketItemRepository.Delete(existingBasketItem);
+                _purchaseOrderRepository.Delete(existingPurchaseOrder);
                 await _unitOfWork.CompleteAsync();
 
-                return new DtoResponse(existingBasketItem);
+                return new DtoResponse(existingPurchaseOrder);
             }
             catch (Exception ex)
             {
-                return new DtoResponse($"An error occurred when deleting basketItem. {ex.Message}");
+                return new DtoResponse($"An error occurred when deleting purchaseOrder. {ex.Message}");
             }
         }
     }

@@ -56,7 +56,7 @@ namespace WarelogManager.Client.Controllers.Sales
 
             var basketItemDto = _mapper.Map<PurchaseOrderResource, PurchaseOrderDto>(basketItem);
             basketItemDto.ApplicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            basketItemDto.AddedAt = DateTime.UtcNow;
+            basketItemDto.PurchaseTime = DateTime.UtcNow;
             var result = await _basketItemService.Add(basketItemDto);
 
             if (!result.Success)
