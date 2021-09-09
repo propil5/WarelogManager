@@ -52,7 +52,7 @@ namespace WarelogManager.Server
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             var mapperConfig = new MapperConfiguration(mc =>
             {
@@ -64,22 +64,22 @@ namespace WarelogManager.Server
 
 
             //Repositories
-            services.AddScoped<ICompanyRepository, CompanyRepository>()
-                    .AddScoped<IPalletRepository, PalletRepository>()
-                    .AddScoped<IPlantRepository, PlantRepository>()
-                    .AddScoped<IProductRepository, ProductRepository>()
-                    .AddScoped<IInventoryItemRepository, InventoryItemRepository>()
-                    .AddScoped<IInventoryItemImageRepository, InventoryItemImageRepository>()
-                    .AddScoped<IBasketItemRepository, BasketItemRepository>()
-                    .AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
+            services.AddTransient<ICompanyRepository, CompanyRepository>()
+                    .AddTransient<IPalletRepository, PalletRepository>()
+                    .AddTransient<IPlantRepository, PlantRepository>()
+                    .AddTransient<IProductRepository, ProductRepository>()
+                    .AddTransient<IInventoryItemRepository, InventoryItemRepository>()
+                    .AddTransient<IInventoryItemImageRepository, InventoryItemImageRepository>()
+                    .AddTransient<IBasketItemRepository, BasketItemRepository>()
+                    .AddTransient<IPurchaseOrderRepository, PurchaseOrderRepository>();
 
 
             //Services
-            services.AddScoped<ICompanyService, CompanyService>()
-                    .AddScoped<IProductService, ProductService>()
-                    .AddScoped<IInventoryItemService, InventoryItemService>()
-                    .AddScoped<IBasketItemService, BasketItemService>()
-                    .AddScoped<IPurchaseOrderService, PurchaseOrderService>();
+            services.AddTransient<ICompanyService, CompanyService>()
+                    .AddTransient<IProductService, ProductService>()
+                    .AddTransient<IInventoryItemService, InventoryItemService>()
+                    .AddTransient<IBasketItemService, BasketItemService>()
+                    .AddTransient<IPurchaseOrderService, PurchaseOrderService>();
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
