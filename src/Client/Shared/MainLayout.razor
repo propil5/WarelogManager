@@ -51,7 +51,15 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var darkModeStorageSetting = await js.InvokeAsync<string>("readLocalStorage", keyDarkMode);
+        var darkModeStorageSetting = "false";
+        try
+        {
+            darkModeStorageSetting = await js.InvokeAsync<string>("readLocalStorage", keyDarkMode);
+        }
+        catch (NullReferenceException)
+        {
+        }
+        
         DarkMode = darkModeStorageSetting.ToLower().Contains("true");
     }
 
