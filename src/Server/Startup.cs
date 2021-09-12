@@ -86,7 +86,11 @@ namespace WarelogManager.Server
 
             services.AddSwaggerGen();
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews(setupAction => 
+            {
+                setupAction.ReturnHttpNotAcceptable = true;
+            }).AddXmlDataContractSerializerFormatters();
+
             services.AddRazorPages();
         }
 
