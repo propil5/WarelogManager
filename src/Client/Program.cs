@@ -20,8 +20,11 @@ namespace WarelogManager.Client
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
-
             var baseApiAddress = GetBaseApiAddress(builder);
+            #if DEBUG
+            baseApiAddress = builder.HostEnvironment.BaseAddress;
+            #endif
+
             builder.Services.AddHttpClient("WarelogManager.ServerAPI", client => client.BaseAddress = new Uri(baseApiAddress))
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
