@@ -28,7 +28,8 @@ namespace WarelogManager.Model.Services.GoogleTrends
         public async void UpdateTrendsData()
         {
             var pythonEngine = Python.CreateEngine();
-            var googleTrendsScriptPath = Path.Combine(Directory.GetCurrentDirectory(), @"\Scripts");
+            var currentDir = Directory.GetCurrentDirectory();
+            var googleTrendsScriptPath = Path.Combine(currentDir, "Scripts\\GoogleTrendingOverTime.py");
             //var products = await _productRepository.Get();
             var products = new List<ProductDto>(){new ProductDto
             {
