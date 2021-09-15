@@ -18,6 +18,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.Data.SqlClient;
 using System;
 using WarelogManager.Model.DataTransfer.Shipping;
+using WarelogManager.Model.DataTransfer.Trends;
 
 namespace WarelogManager.Model.Mapping
 {
@@ -78,8 +79,10 @@ namespace WarelogManager.Model.Mapping
         public virtual DbSet<RackDto> Racks { get; set; }
         public virtual DbSet<InventoryItemDto> InventoryItems { get; set; }
         public virtual DbSet<ShippingMethodDto> ShippingMethods { get; set; }
-        //public virtual DbSet<FileDto> Files { get; set; }
         public virtual DbSet<InventoryItemImageDto> InventoryItemImages { get; set; }
+
+        //Data Analysys
+        public virtual DbSet<GoogleTrendsDto> GoogleTrendsData { get; set; }
 
         internal ApplicationDbContext CreateDbContext(object i)
         {
