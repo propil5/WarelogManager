@@ -10,6 +10,7 @@ using WarelogManager.Model.DataTransfer.Warehouse;
 
 namespace WarelogManager.Model.DataTransfer.Inbound
 {
+    [Table("IncomingTransport")]
     public class IncomingTransportDto
     {
         [Required, Key, DatabaseGenerated(DatabaseGeneratedOption.None)]

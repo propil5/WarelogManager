@@ -10,7 +10,6 @@
     <Folder Include="Lib\" />
     <Folder Include="Repositories\Accounting\" />
     <Folder Include="Repositories\Managing\" />
-    <Folder Include="Repositories\Inbound\" />
     <Folder Include="Repositories\Common\" />
     <Folder Include="Repositories\Processing\" />
     <Folder Include="Repositories\Outbound\" />
