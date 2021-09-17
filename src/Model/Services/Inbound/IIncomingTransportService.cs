@@ -8,7 +8,7 @@ using WarelogManager.Model.DataTransfer.Inbound;
 
 namespace WarelogManager.Model.Services.Inbound
 {
-    interface IIncomingTransportService
+    public interface IIncomingTransportService
     {
         Task<DtoResponse> Add(IncomingTransportDto pallet);
         Task<DtoResponse> Delete(int id);

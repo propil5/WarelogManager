@@ -1,0 +1,86 @@
+﻿@page "/shop/basket"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using WarelogManager.Client.Resources.Common
+@using WarelogManager.Client.Resources.Sales
+@using WarelogManager.Shared.Resources.Warehouse.InventoryItem
+@using WarelogManager.Shared.Resources.Warehouse.Product
+
+@attribute [Authorize]
+@inject NavigationManager NavManager
+@inject HttpClient Http
+@inject IToastService toastService
+
+<h1>Basket</h1>
+
+@if (basketItems == null)
+{
+    <div class="spinner-grow text-success" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+}
+else
+{
+    <MudGrid>
+        @foreach (var basketItem in basketItems)
+        {
+            var image = GetItemImage(basketItem.InventoryItem);
+            <MudItem xs="3">
+                <MudCard xs="3">
+                    <MudCardMedia Image="@(image.Src)" Height="200" />
+                    <MudCardContent>
+                        <MudText>@basketItem.InventoryItem.ProductName</MudText>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Text" Color="Color.Success"
+                            @onclick="() => Remove(basketItem)">Remove
+                        </MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+}
+@code {
+    private BasketItemResource[] basketItems;
+    bool IsTaskRunning = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetProductsAsync();        
+    }
+
+    private async Task GetProductsAsync()
+    {
+        basketItems = await Http.GetFromJsonAsync<BasketItemResource[]>("api/basket/");
+    }
+
+    private BaseImageResource GetItemImage(InventoryItemResource inventoryItem)
+    {
+        var images = new List<BaseImageResource>();
+        if (inventoryItem.Images == null || inventoryItem.Images.Count == 0)
+        {
+            return new BaseImageResource
+            {
+                Src = @"/images/question_mark.png",
+                Alt = "n/a"
+            };
+        }
+        else
+        {
+            return GetBaseImageResource(inventoryItem.Images.First());
+        }
+    }
+
+    private void Remove(BasketItemResource basketItem)
+    {
+        return;
+    }
+
+    private BaseImageResource GetBaseImageResource(BaseImageResource imageResource)
+    {
+        imageResource.Src = $"data:{imageResource.Type};base64,{Convert.ToBase64String(imageResource.Data)}";
+        imageResource.Alt = imageResource.Alt ?? "n/a";
+        return imageResource;
+    }
+}

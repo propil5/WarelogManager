@@ -14,6 +14,7 @@ namespace WarelogManager.Model.Services.Sales.Interface
         Task<DtoResponse> DeleteAsync(int id);
         Task<IEnumerable<BasketItemDto>> Get();
         Task<BasketItemDto> Get(int id);
+        Task<IEnumerable<BasketItemDto>> GetUserBasketItems(string userId);
         Task<DtoResponse> Update(int id, BasketItemDto basketItem);
     }
 }

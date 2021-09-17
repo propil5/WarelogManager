@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WarelogManager.Client.Resources.Inbound;
+using WarelogManager.Model.DataTransfer.Inbound;
+using WarelogManager.Model.Extensions;
 using WarelogManager.Model.Services.Inbound;
 
 namespace WarelogManager.Client.Controllers.Inbound
@@ -12,7 +16,7 @@ namespace WarelogManager.Client.Controllers.Inbound
     [ApiController]
     public class IncomingTransportController : ControllerBase
     {
-        private readonly IncomingTransportService _incomingTransportService;
+        private readonly IIncomingTransportService _incomingTransportService;
         private readonly IMapper _mapper;
 
         public IncomingTransportController(IIncomingTransportService incomingTransportService, IMapper mapper)

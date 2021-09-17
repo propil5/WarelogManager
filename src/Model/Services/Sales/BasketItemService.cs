@@ -47,6 +47,11 @@ namespace WarelogManager.Model.Services.Sales
             return await _basketItemRepository.Get();
         }
 
+        public async Task<IEnumerable<BasketItemDto>> GetUserBasketItems(string userId)
+        {
+            return await _basketItemRepository.Get(userId);
+        }
+
         public async Task<BasketItemDto> Get(int id)
         {
             return await _basketItemRepository.GetById(id);

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using IronPython.Modules;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,15 @@ namespace WarelogManager.Model.Repositories.Sales
         public async Task<IEnumerable<BasketItemDto>> Get()
         {
             return await _context.BasketItems.ToListAsync();
+        }
+
+        public async Task<IEnumerable<BasketItemDto>> Get(string userId)
+        {
+            return await _context.BasketItems
+                .Include(m => m.InventoryItem)
+                .ThenInclude(i => i.Images)
+                .Where(x => x.ApplicationUserId == userId)
+                .ToListAsync();
         }
 
         public async Task<BasketItemDto> GetById(int id)
