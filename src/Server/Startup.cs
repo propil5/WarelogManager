@@ -21,6 +21,7 @@ using WarelogManager.Model.Repositories.Sales;
 using WarelogManager.Model.Repositories.Sales.Interface;
 using WarelogManager.Model.Services.Sales.Interface;
 using WarelogManager.Model.Services.Sales;
+using Serilog;
 
 namespace WarelogManager.Server
 {
@@ -110,6 +111,7 @@ namespace WarelogManager.Server
                 app.UseHsts();
             }
 
+            app.UseSerilogRequestLogging();
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
