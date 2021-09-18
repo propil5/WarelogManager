@@ -25,10 +25,10 @@ namespace WarelogManager.Client.Controllers.Sales
         }
 
         [HttpGet]
-        public async Task<IEnumerable<BasketItemResource>> Get()
+        public async Task<IEnumerable<BaseBasketItemResource>> Get()
         {
             var queryResult = await _basketItemService.GetUserBasketItems(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            return _mapper.Map<IEnumerable<BasketItemDto>, IEnumerable<BasketItemResource>>(queryResult);
+            return _mapper.Map<IEnumerable<BasketItemDto>, IEnumerable<BaseBasketItemResource>>(queryResult);
         }
     }
 }

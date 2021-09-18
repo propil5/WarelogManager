@@ -1,5 +1,7 @@
 ﻿using IronPython.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Scripting.Hosting;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.IO;

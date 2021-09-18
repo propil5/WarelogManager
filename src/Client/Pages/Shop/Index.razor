@@ -114,7 +114,7 @@ else
     private async void AddToBasket(InventoryItemResource inventoryItem)
     {
         IsTaskRunning = true;
-        var basketItem = new BasketItemResource
+        var basketItem = new BaseBasketItemResource
         {
             InventoryItemId = inventoryItem.Id,
             Quantity = 1

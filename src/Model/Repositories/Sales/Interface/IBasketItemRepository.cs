@@ -13,7 +13,7 @@ namespace WarelogManager.Model.Repositories.Sales.Interface
         void Delete(BasketItemDto salesOrderLine);
         Task<IEnumerable<BasketItemDto>> Get();
         Task<IEnumerable<BasketItemDto>> Get(string userId);
-        Task<BasketItemDto> GetById(int id);
+        Task<BasketItemDto> Get(int id);
         void Update(BasketItemDto salesOrderLine);
     }
 }

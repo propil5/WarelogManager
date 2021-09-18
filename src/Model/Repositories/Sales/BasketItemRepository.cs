@@ -44,7 +44,7 @@ namespace WarelogManager.Model.Repositories.Sales
                 .ToListAsync();
         }
 
-        public async Task<BasketItemDto> GetById(int id)
+        public async Task<BasketItemDto> Get(int id)
         {
             return await _context.BasketItems.FindAsync(id);
         }

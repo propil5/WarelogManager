@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.Configuration;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -39,22 +40,22 @@ namespace WarelogManager.Client.Controllers.Sales
 
         // GET api/basket/item/5
         [HttpGet("{id:int}")]
-        public async Task<BasketItemResource> GetById(int id)
+        public async Task<BaseBasketItemResource> GetById(int id)
         {
             var queryResult = await _basketItemService.Get(id);
-            return _mapper.Map<BasketItemDto, BasketItemResource>(queryResult);
+            return _mapper.Map<BasketItemDto, BaseBasketItemResource>(queryResult);
         }
 
         // POST api/basket/item
         [HttpPost]
-        public async Task<IActionResult> Add(BasketItemResource basketItem)
+        public async Task<IActionResult> Add(BaseBasketItemResource basketItem)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetErrorMessages());
             }
             
-            var basketItemDto = _mapper.Map<BasketItemResource, BasketItemDto>(basketItem);
+            var basketItemDto = _mapper.Map<BaseBasketItemResource, BasketItemDto>(basketItem);
             basketItemDto.ApplicationUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             basketItemDto.AddedAt = DateTime.UtcNow;
             var result = await _basketItemService.Add(basketItemDto);
@@ -64,18 +65,18 @@ namespace WarelogManager.Client.Controllers.Sales
                 return BadRequest(result.Message);
             }
 
-            var basketItemResorce = _mapper.Map<BasketItemDto, BasketItemResource>(result.Dto as BasketItemDto);
+            var basketItemResorce = _mapper.Map<BasketItemDto, BaseBasketItemResource>(result.Dto as BasketItemDto);
             return Ok(basketItemResorce);
         }
 
         // PUT api/basket/item
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] BasketItemResource basketItem)
+        public async Task<IActionResult> Update(int id, [FromBody] BaseBasketItemResource basketItem)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
-            var basketItemDto = _mapper.Map<BasketItemResource, BasketItemDto>(basketItem);
+            var basketItemDto = _mapper.Map<BaseBasketItemResource, BasketItemDto>(basketItem);
             var result = await _basketItemService.Update(id, basketItemDto);
 
             if (!result.Success)
@@ -83,9 +84,28 @@ namespace WarelogManager.Client.Controllers.Sales
                 return BadRequest(result.Message);
             }
 
-            var basketItemResource = _mapper.Map<BasketItemDto, BasketItemResource>(result.Dto as BasketItemDto);
+            var basketItemResource = _mapper.Map<BasketItemDto, BaseBasketItemResource>(result.Dto as BasketItemDto);
             return Ok(basketItemResource);
         }
+
+        // PATCH api/basket/item/5
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PartiallyUpdate(int id, [FromBody] 
+        JsonPatchDocument<BaseBasketItemResource> basketItemPatchResource)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState.GetErrorMessages());
+
+            var result = await _basketItemService.ApplyPatch(id, basketItemPatchResource);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+
+            var basketItemResource = _mapper.Map<BasketItemDto, BaseBasketItemResource>(result.Dto as BasketItemDto);
+            return Ok(basketItemResource);
+        }
+
 
         // DELETE api/basket/item/5
         [HttpDelete("{id}")]
@@ -98,7 +118,7 @@ namespace WarelogManager.Client.Controllers.Sales
                 return BadRequest(result.Message);
             }
 
-            var basketItemResource = _mapper.Map<BasketItemDto, BasketItemResource>(result.Dto as BasketItemDto);
+            var basketItemResource = _mapper.Map<BasketItemDto, BaseBasketItemResource>(result.Dto as BasketItemDto);
             return Ok(basketItemResource);
         }
     }

@@ -7,8 +7,10 @@ using WarelogManager.Shared.Resources.Warehouse.InventoryItem;
 
 namespace WarelogManager.Client.Resources.Sales
 {
-    public class BasketItemResource : BaseBasketItemResource
+    public class BaseBasketItemResource
     {
-        public int Id { get; set; }
+        public int Quantity { get; set; }
+        public int InventoryItemId { get; set; }
+        public InventoryItemResource InventoryItem { get; set; }
     }
 }

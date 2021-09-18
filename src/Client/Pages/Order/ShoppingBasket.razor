@@ -1,10 +1,13 @@
 ﻿@page "/shop/basket"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using System.Text
+@using Newtonsoft.Json
 @using WarelogManager.Client.Resources.Common
 @using WarelogManager.Client.Resources.Sales
 @using WarelogManager.Shared.Resources.Warehouse.InventoryItem
 @using WarelogManager.Shared.Resources.Warehouse.Product
+@using Microsoft.AspNetCore.JsonPatch
 
 @attribute [Authorize]
 @inject NavigationManager NavManager
@@ -24,16 +27,20 @@ else
     <MudGrid>
         @foreach (var basketItem in basketItems)
         {
-            var image = GetItemImage(basketItem.InventoryItem);
+            var item = basketItem.InventoryItem;
+            var image = GetItemImage(item);
             <MudItem xs="3">
                 <MudCard xs="3">
                     <MudCardMedia Image="@(image.Src)" Height="200" />
                     <MudCardContent>
-                        <MudText>@basketItem.InventoryItem.ProductName</MudText>
+                        <MudText>@item.ProductName</MudText>
+                    </MudCardContent>
+                    <MudCardContent>
+                        <MudNumericField Label="Quantity" @bind-Value="basketItem.Quantity" For="(() => UpdateItemQuantity(basketItem))"></MudNumericField>
                     </MudCardContent>
                     <MudCardActions>
                         <MudButton Variant="Variant.Text" Color="Color.Success"
-                            @onclick="() => Remove(basketItem)">Remove
+                            @onclick="() => RemoveBasketItemAsync(basketItem.Id)">Remove
                         </MudButton>
                     </MudCardActions>
                 </MudCard>
@@ -72,9 +79,27 @@ else
         }
     }
 
-    private void Remove(BasketItemResource basketItem)
+    private async Task RemoveBasketItemAsync(int id)
     {
-        return;
+        IsTaskRunning = true;
+        var result = await Http.DeleteAsync($"api/basket/item/{id}");
+        if (result.IsSuccessStatusCode)
+        {
+            toastService.ShowWarning($"Succesfully removed basket item with id: {id}.");
+            await GetProductsAsync();
+        }
+        IsTaskRunning = false;
+    }
+
+    private async Task UpdateItemQuantity(BasketItemResource basketItemResource)
+    {
+        var patchDoc = new JsonPatchDocument<BasketItemResource>();
+        patchDoc.Replace(e => e.Quantity, basketItemResource.Quantity);
+        var serializedDoc = JsonConvert.SerializeObject(patchDoc);
+
+        var itemId = basketItemResource.Id;
+        var requestContent = new StringContent(serializedDoc, Encoding.UTF8, "application/json-patch+json");
+        var response = await Http.PatchAsync($"api/basket/item/{itemId}", requestContent);
     }
 
     private BaseImageResource GetBaseImageResource(BaseImageResource imageResource)
