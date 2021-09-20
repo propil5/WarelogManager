@@ -1,14 +1,16 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Shipping;
 using WarelogManager.Model.Mapping;
+using WarelogManager.Model.Repositories.Warehouse.Interface;
 
 namespace WarelogManager.Model.Repositories.ShippingMethod
 {
-    public class ShippingMethodRepository : BaseRepository
+    public class ShippingMethodRepository : BaseRepository, IShippingMethodRepository
     {
         public ShippingMethodRepository(ApplicationDbContext context) : base(context)
         {
@@ -18,7 +20,7 @@ namespace WarelogManager.Model.Repositories.ShippingMethod
         {
             try
             {
-                await _context.shippingMethods.AddAsync(basketItem);
+                await _context.ShippingMethods.AddAsync(basketItem);
                 return true;
             }
             catch (Exception ex)
@@ -29,22 +31,22 @@ namespace WarelogManager.Model.Repositories.ShippingMethod
 
         public async Task<IEnumerable<ShippingMethodDto>> Get()
         {
-            return await _context.shippingMethods.ToListAsync();
+            return await _context.ShippingMethods.ToListAsync();
         }
 
         public async Task<ShippingMethodDto> GetById(int id)
         {
-            return await _context.shippingMethods.FindAsync(id);
+            return await _context.ShippingMethods.FindAsync(id);
         }
 
         public void Update(ShippingMethodDto basketItemDto)
         {
-            _context.shippingMethods.Update(basketItemDto);
+            _context.ShippingMethods.Update(basketItemDto);
         }
 
         public void Delete(ShippingMethodDto basketItemDto)
         {
-            _context.shippingMethods.Remove(basketItemDto);
+            _context.ShippingMethods.Remove(basketItemDto);
         }
     }
 }
