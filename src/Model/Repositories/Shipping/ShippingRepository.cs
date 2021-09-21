@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Shipping;
 using WarelogManager.Model.Mapping;
+using WarelogManager.Model.Repositories.Warehouse.Interface;
 
 namespace WarelogManager.Model.Repositories.ShippingMethod
 {
-    public class ShippingMethodRepository : BaseRepository
+    public class ShippingMethodRepository : BaseRepository, IShippingMethodRepository
     {
         public ShippingMethodRepository(ApplicationDbContext context) : base(context)
         {
