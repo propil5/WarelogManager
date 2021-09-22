@@ -17,78 +17,68 @@
 }
 else
 {
-    <div>
-    <button type="button" class="btn btn-success" @onclick="() => RedirectToItemEdit()">Add</button>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>SKULabel</th>
-                <th>Photo</th>
-                <th>Product Id</th>
-                <th>Unit Of Measure</th>
-                <th>Descritption</th>
-                <th>Size Id</th>
-                <th>Added Date</th>
-                <th>Added By</th>
-                <th>AvailableQuantity</th> 
-                <th>Total Quantity</th>
-                @if(DisplayEditColumn)
-                {
-                    <th>Eddited By</th>
-                    <th>Edited Date</th>
-                }
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var inventoryItem in inventoryItems)
-            {
-                <tr>
-                    <td>@inventoryItem.SKULabel</td>
-                    <td>
-                            @foreach (var image in inventoryItem.Images.Take(2))
-                            {
-                                <span>
-                                    <img style="max-width: 50px; max-height: 50px; margin-top: 2px;" src="data:@image.Type;base64,@Convert.ToBase64String(image.Data)">
-                                </span>
-                            }
-                    </td>
-                    <td>@inventoryItem.ProductId</td>
-                    <td>@inventoryItem.UnitOfMeasure</td>
-                    <td>@inventoryItem.Descritption</td>
-                    <td>@inventoryItem.SizeId</td>
-                    <td>@inventoryItem.AddedDate</td>
-                    <td>@inventoryItem.AddedBy.Email</td>
-                    <td>@inventoryItem.AvailableQuantity</td>
-                    <td>@inventoryItem.TotalQuantity</td>
 
-                        @if(DisplayEditColumn)
-                        {
-                            <td>@inventoryItem.EdditedByEmail</td>
-                            <td>@inventoryItem.EditedDate</td>
-                        }
-                    <td>
-                        <button type="button" class="btn btn-warning" disabled=@IsTaskRunning 
-                                @onclick="() => RedirectToItemEdit(inventoryItem.Id)">Edit</button>
-
-                        <button type="button" class="btn btn-danger" disabled=@IsTaskRunning
-                                @onclick="() => RemoveItemAsync(inventoryItem.Id)">Delete</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <MudTable Items="@inventoryItems">
+        <ToolBarContent>
+            <MudText Typo="Typo.h6">Inventory Items</MudText>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh>SKULabel</MudTh>
+            <MudTh>Photo</MudTh>
+            <MudTh>Product Id</MudTh>
+            <MudTh>Unit Of Measure</MudTh>
+            <MudTh>Descritption</MudTh>
+            <MudTh>Size Id</MudTh>
+            <MudTh>Added Date</MudTh>
+            <MudTh>Added By</MudTh>
+            <MudTh>AvailableQuantity</MudTh>
+            <MudTh>Total Quantity</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="SKULabel">@context.SKULabel</MudTd>
+            <MudTd DataLabel="Photo">
+                @foreach (var image in @context.Images.Take(2))
+                    {
+                    <span>
+                        <img style="max-width: 50px; max-height: 50px; margin-top: 2px;" src="data:@image.Type;base64,@Convert.ToBase64String(image.Data)">
+                    </span>
+                    }
+                </MudTd>
+            <MudTd DataLabel="Product Id">@context.ProductId</MudTd>
+            <MudTd DataLabel="UnitOfMeasure">@context.UnitOfMeasure</MudTd>
+            <MudTd DataLabel="Description">@context.Descritption</MudTd>
+            <MudTd DataLabel="Size Id">@context.SizeId</MudTd>
+            <MudTd DataLabel="Added Date">@context.AddedDate</MudTd>
+            <MudTd DataLabel="Added By">@context.AddedBy</MudTd>
+            <MudTd DataLabel="Available Quantity">@context.AvailableQuantity</MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager InfoFormat="@($"Left {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Left" HidePageNumber="@hidePageNumber" HidePagination="@hidePagination" HideRowsPerPage="@hideRowsPerPage" />
+            <MudTablePager InfoFormat="@($"Start {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Start" HidePageNumber="@hidePageNumber" HidePagination="@hidePagination" HideRowsPerPage="@hideRowsPerPage" />
+            <MudTablePager InfoFormat="@($"Center {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Center" HidePageNumber="@hidePageNumber" HidePagination="@hidePagination" HideRowsPerPage="@hideRowsPerPage" />
+            <MudTablePager InfoFormat="@($"Right {infoFormat}")" HorizontalAlignment="HorizontalAlignment.Right" HidePageNumber="@hidePageNumber" HidePagination="@hidePagination" HideRowsPerPage="@hideRowsPerPage" />
+            <MudTablePager InfoFormat="@($"End {infoFormat}")" HorizontalAlignment="HorizontalAlignment.End" HidePageNumber="@hidePageNumber" HidePagination="@hidePagination" HideRowsPerPage="@hideRowsPerPage" />
+        </PagerContent>
+    </MudTable>
+    <div class="d-flex flex-wrap mt-4">
+        <MudSwitch @bind-Checked="@hideRowsPerPage" Color="Color.Tertiary">Hide/Show Rows per Page</MudSwitch>
+        <MudSwitch @bind-Checked="@hidePageNumber" Color="Color.Primary">Hide/Show Page Number</MudSwitch>
+        <MudSwitch @bind-Checked="@hidePagination" Color="Color.Secondary">Hide/Show Pagination</MudSwitch>
     </div>
 }
 
 @code {
     private InventoryItemResource[] inventoryItems;
     bool IsTaskRunning = false;
+    private bool hidePageNumber;
+    private bool hidePagination;
+    private bool hideRowsPerPage;
+    private string infoFormat = "{first_item}-{last_item} of {all_items}";
     bool DisplayEditColumn => inventoryItems?.Any(x => x.EditedById != null) ?? false;
 
     protected override async Task OnInitializedAsync()
     {
-        await GetItemsAsync();        
+        await GetItemsAsync();
     }
 
     private async Task GetItemsAsync()
@@ -99,16 +89,16 @@ else
 
     private void RedirectToItemEdit(int? id = null)
     {
-        if(id == null)
+        if (id == null)
         {
             NavManager.NavigateTo($"/inventory/items/add");
         }
         else
         {
-            NavManager.NavigateTo($"/inventory/items/edit/{id}");    
+            NavManager.NavigateTo($"/inventory/items/edit/{id}");
         }
     }
-    
+
     private async Task RemoveItemAsync(int id)
     {
         IsTaskRunning = true;
