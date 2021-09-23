@@ -14,7 +14,7 @@ namespace WarelogManager.Model.Services.Warehouse
 {
     public class ShippingMethodService : IShippingMethodService
     {
-        private readonly ShippingMethodRepository _shippingMethodRepository;
+        private readonly IShippingMethodRepository _shippingMethodRepository;
         private readonly IUnitOfWork _unitOfWork;
 
         public ShippingMethodService(IShippingMethodRepository shippingMethodRepository, IUnitOfWork unitOfWork)

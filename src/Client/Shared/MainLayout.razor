@@ -55,12 +55,11 @@
         try
         {
             darkModeStorageSetting = await js.InvokeAsync<string>("readLocalStorage", keyDarkMode);
+            DarkMode = darkModeStorageSetting.ToLower().Contains("true");
         }
         catch (NullReferenceException)
         {
         }
-        
-        DarkMode = darkModeStorageSetting.ToLower().Contains("true");
     }
 
     private async Task ModeChangedAsync()
