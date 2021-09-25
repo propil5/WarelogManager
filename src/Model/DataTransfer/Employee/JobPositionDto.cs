@@ -9,5 +9,8 @@ namespace WarelogManager.Model.DataTransfer.Employee
 {
     public class JobPositionDto : BaseEntity
     {
+        public string Name { get; set; }
+        public string Descrpition { get; set; }
+        public int ResponsibilityLevel { get; set; }
     }
 }
