@@ -7,9 +7,9 @@ using WarelogManager.Model.DataTransfer.Common;
 using WarelogManager.Model.DataTransfer.Employee;
 using WarelogManager.Model.DataTransfer.Utilities;
 
-namespace WarelogManager.Model.DataTransfer.NewFolder
+namespace WarelogManager.Model.DataTransfer.Employee
 {
-    public class EmployeeDtoc : BaseEntity
+    public class EmployeeDto : BaseEntity
     {
         public int JobPositionDtoId { get; set; }
         public JobPositionDto JobPosition { get; set; }

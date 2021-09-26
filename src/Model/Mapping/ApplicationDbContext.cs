@@ -84,6 +84,8 @@ namespace WarelogManager.Model.Mapping
         //Data Analysys
         public virtual DbSet<GoogleTrendsDto> GoogleTrendsData { get; set; }
 
+        public virtual DbSet<EmployeeDto> Employees { get; set; }
+
         internal ApplicationDbContext CreateDbContext(object i)
         {
             throw new System.NotImplementedException();

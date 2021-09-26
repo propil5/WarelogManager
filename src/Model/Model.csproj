@@ -14,6 +14,7 @@
     <Folder Include="Repositories\Processing\" />
     <Folder Include="Repositories\Outbound\" />
     <Folder Include="Repositories\User\" />
+    <Folder Include="Services\NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>
