@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace WarelogManager.Model.Repositories.Employee
         {
             try
             {
-                await _context.Employes.AddAsync(employee);
+                await _context.Employees.AddAsync(employee);
                 return true;
             }
             catch (Exception)
@@ -30,16 +31,7 @@ namespace WarelogManager.Model.Repositories.Employee
 
         public async Task<IEnumerable<EmployeeDto>> Get()
         {
-            return await _context.Employes.ToListAsync();
-        }
-
-        public async Task<IEnumerable<EmployeeDto>> Get(string userId)
-        {
-            return await _context.Employes
-                .Include(m => m.InventoryItem)
-                .ThenInclude(i => i.Images)
-                .Where(x => x.ApplicationUserId == userId)
-                .ToListAsync();
+            return await _context.Employees.ToListAsync();
         }
 
         public async Task<EmployeeDto> Get(int id)

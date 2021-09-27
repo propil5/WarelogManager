@@ -19,6 +19,7 @@ using Microsoft.Data.SqlClient;
 using System;
 using WarelogManager.Model.DataTransfer.Shipping;
 using WarelogManager.Model.DataTransfer.Trends;
+using WarelogManager.Model.DataTransfer.Employee;
 
 namespace WarelogManager.Model.Mapping
 {

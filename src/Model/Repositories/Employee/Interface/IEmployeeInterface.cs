@@ -13,7 +13,6 @@ namespace WarelogManager.Model.Repositories.Employee.Interface
         void Delete(EmployeeDto employeeDto);
         Task<IEnumerable<EmployeeDto>> Get();
         Task<EmployeeDto> Get(int id);
-        Task<IEnumerable<EmployeeDto>> Get(string userId);
         void Update(EmployeeDto employeeDto);
     }
 }

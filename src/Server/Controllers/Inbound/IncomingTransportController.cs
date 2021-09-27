@@ -12,7 +12,7 @@ using WarelogManager.Model.Services.Inbound;
 namespace WarelogManager.Client.Controllers.Inbound
 {
 
-    [Route("api/[controller]")]
+    [Route("api/transport/incoming")]
     [ApiController]
     public class IncomingTransportController : ControllerBase
     {
