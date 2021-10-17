@@ -7,7 +7,7 @@ using WarelogManager.Client.Resources.Warehouse.Identity;
 
 namespace WarelogManager.Client.Resources.Employee
 {
-    public class EmployeeResource : BaseEmployeeResource
+    public class  EmployeeResource : BaseEmployeeResource
     {
         public int Id { get; set; }
     }
