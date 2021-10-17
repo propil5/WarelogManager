@@ -9,6 +9,7 @@ using WarelogManager.Model.Repositories.GoogleTrends;
 using WarelogManager.Model.Repositories.Warehouse;
 using WarelogManager.Model.Repositories.Warehouse.Interface;
 using WarelogManager.Model.Services.GoogleTrends;
+using WarelogManager.Model.Services.Helpers;
 
 namespace WarelogManager.Client.Service
 {
@@ -23,7 +24,7 @@ namespace WarelogManager.Client.Service
             var mockProductRepository = new Mock<IProductRepository>();
             var mockGoogleRepository = new Mock<IGoogleTrendsRepository>();
 
-            _googleTrendsService = new GoogleTrendsService(mockProductRepository.Object, mockGoogleRepository.Object);
+            _googleTrendsService = new GoogleTrendsService(mockProductRepository.Object, mockGoogleRepository.Object, new PythonEngineService());
         }
 
         [Test]
