@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using WarelogManager.Model.DataTransfer.Warehouse;
 using WarelogManager.Model.Repositories.GoogleTrends;
 using WarelogManager.Model.Repositories.Warehouse.Interface;
+using WarelogManager.Model.Services.Helpers.Interface;
 using WarelogManager.Model.Services.Warehouse.Interface;
 
 namespace WarelogManager.Model.Services.GoogleTrends
@@ -20,16 +21,19 @@ namespace WarelogManager.Model.Services.GoogleTrends
     {
         private readonly IProductRepository _productRepository;
         private readonly IGoogleTrendsRepository _googleTrendsRepository;
+        private readonly IPythonEngineService _pythonEngineService;
 
-        public GoogleTrendsService(IProductRepository productRepository, IGoogleTrendsRepository googleTrendsRepository)
+        public GoogleTrendsService(IProductRepository productRepository, IGoogleTrendsRepository googleTrendsRepository,
+            IPythonEngineService pythonEngineService)
         {
             _productRepository = productRepository;
             _googleTrendsRepository = googleTrendsRepository;
+            _pythonEngineService = pythonEngineService;
         }
 
         public async void UpdateTrendsData()
         {
-            var pythonEngine = Python.CreateEngine();
+            var pythonEngine = _pythonEngineService.GetEngine();
             var currentDir = Directory.GetCurrentDirectory();
             var googleTrendsScriptPath = Path.Combine(currentDir, "Scripts\\GoogleTrendingOverTime.py");
             //var products = await _productRepository.Get();
