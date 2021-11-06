@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcService", "src\GrpcServ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Worker", "src\Worker\Worker.csproj", "{C1E81B47-E51B-47A2-9581-EBA26697AB41}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Python", "Python\Python.pyproj", "{CC3CB790-0B28-46F5-AAC4-BC2543730538}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,8 +51,6 @@ Global
 		{C1E81B47-E51B-47A2-9581-EBA26697AB41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1E81B47-E51B-47A2-9581-EBA26697AB41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1E81B47-E51B-47A2-9581-EBA26697AB41}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CC3CB790-0B28-46F5-AAC4-BC2543730538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CC3CB790-0B28-46F5-AAC4-BC2543730538}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
